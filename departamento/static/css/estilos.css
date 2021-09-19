@@ -1,0 +1,78 @@
+.button {
+    transition-duration: 0.4s;
+  }
+  
+  .button:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+  }
+
+header {
+    color:rgb(50, 25, 177);
+}
+.containerLogin {
+  align-items: center;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.zoom {
+  transition: transform 1s;
+}
+.zoom:hover {
+  transform: scale(1.1);
+}
+
+.notification {
+  text-align: center;
+  background-color: chartreuse;
+}
+
+h1 {
+  font-family: Helvetica;
+  font-weight: 200;
+}
+h4 {
+  font-family: Verdana;
+    font-size: 30px;
+     -webkit-text-fill-color:white;
+     -webkit-text-stroke: 1px;
+     -webkit-text-stroke-color: chartreuse;
+  
+}
+
+.texto-carrusel {
+    -webkit-text-fill-color:white;
+    -webkit-text-stroke: 1px;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    
+}

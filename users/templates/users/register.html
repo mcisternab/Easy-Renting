@@ -1,0 +1,177 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<body>
+  <div class="mb-3 containerLogin form-signin">
+    <img src="{% static '/img/user.png' %}" alt="user" width="100">
+    <h1 class="h3 mb-3 fw-normal">Registrar usuario</h1>
+    <form method="POST" class="form-group">
+      {% csrf_token %}
+      <label for="username">Usuario:</label>
+      <div class="form-group">
+        <input type="text" class="form-control" name="username" placeholder="Ingrese nombre de usuario" required>  
+      </div> 
+      <div class="row">
+        <div class="form-group col-lg-6">
+            <label for="first_name">Nombre: </label>
+            <input type="text" class="form-control" name="first_name" placeholder="Ingrese nombre" required>   
+        </div>
+        <div class="form-group col-lg-6">
+            <label for="last_name">Apellido</label>
+            <input type="text" class="form-control" name="last_name" required placeholder="Ingrese apellido" required>   
+        </div>
+    </div>
+      <label for="password">Contraseña:</label>
+      <div class="form-group">
+        <input type="password" class="form-control"  name="password1" minlength="6" maxlength="20" placeholder="Ingrese contraseña" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control"  name="password2" minlength="6" maxlength="20" placeholder="Repita contraseña" required>
+      </div>
+      <label for="email">Email:</label>
+      <div class="form-group">
+        <input type="email" class="form-control"  name="email" minlength="6" placeholder="Ingrese email" required>
+      </div><br>
+      <button type="reset" class="btn btn-primary button">Limpiar</button>
+      <button type="submit" class="btn btn-primary button">Registrar</button>
+    </form>
+    <hr />
+    <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a> </p>
+  </div>
+  {% endblock %}
+
+  {% block footer %}
+  <footer class="text-center text-white" style="background-color: #caced1;">
+    <!-- Grid container -->
+    <div class="p-4">
+      <!-- Section: Images -->
+      <section class="">
+        <div class="row">
+          <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+            <div
+              class="bg-image hover-overlay ripple shadow-1-strong rounded"
+              data-ripple-color="light"
+            >
+              <img
+                src="{% static '/img/termasgeo.jpg' %}"
+                class="w-100 zoom"
+                title="termas"
+              />
+              <a href="#!">
+                <div
+                  class="mask"
+                  style="background-color: rgba(251, 251, 251, 0.2);"
+                ></div>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+            <div
+              class="bg-image hover-overlay ripple shadow-1-strong rounded"
+              data-ripple-color="light"
+            >
+              <img
+                src="{% static '/img/observatorio.jpg' %}"
+                class="w-100 zoom"
+                title="Observatorio La Serena"
+              />
+              <a href="#!">
+                <div
+                  class="mask"
+                  style="background-color: rgba(251, 251, 251, 0.2);"
+                ></div>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+            <div
+              class="bg-image hover-overlay ripple shadow-1-strong rounded"
+              data-ripple-color="light"
+            >
+              <img
+                src="{% static '/img/canopy.jpg' %}"
+                class="w-100 zoom"
+                title="Canopy"
+              />
+              <a href="#!">
+                <div
+                  class="mask"
+                  style="background-color: rgba(251, 251, 251, 0.2);"
+                ></div>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+            <div
+              class="bg-image hover-overlay ripple shadow-1-strong rounded"
+              data-ripple-color="light"
+            >
+              <img
+                src="{% static '/img/termas.jpg' %}"
+                class="w-100 zoom"
+                title="termas"
+              />
+              <a href="#!">
+                <div
+                  class="mask"
+                  style="background-color: rgba(251, 251, 251, 0.2);"
+                ></div>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+            <div
+              class="bg-image hover-overlay ripple shadow-1-strong rounded"
+              data-ripple-color="light"
+            >
+              <img
+                src="{% static '/img/Banquete.jpg' %}"
+                class="w-100 zoom"
+                title="banquete"
+              />
+              <a href="#!">
+                <div
+                  class="mask"
+                  style="background-color: rgba(251, 251, 251, 0.2);"
+                ></div>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+            <div
+              class="bg-image hover-overlay ripple shadow-1-strong rounded"
+              data-ripple-color="light"
+            >
+              <img
+                src="{% static '/img/playachiloe.jpg' %}"
+                class="w-100 zoom"
+                title="Chiloé"
+              />
+              <a href="#!">
+                <div
+                  class="mask"
+                  style="background-color: rgba(251, 251, 251, 0.2);"
+                ></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Section: Images -->
+    </div>
+    <!-- Grid container -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2021 Copyright:
+      <a class="text-white" href="https://mdbootstrap.com/">Easyrenting.cl</a>
+    </div>
+    <!-- Copyright -->
+  </footer> 
+  </body>
+  {% endblock %}

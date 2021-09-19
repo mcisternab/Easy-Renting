@@ -1,0 +1,362 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% block extrahead %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Easy Renting {% endblock %}</title>
+    <link rel="shortcut icon" href="{% static '/img/logo.png' %}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{% static '/css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static '/css/features.css' %}">
+
+    <!-- Se integra JS de boostrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    {% endblock %}
+</head>
+<body>
+    <!-- Esto es un comentario -->
+    <!-- Esta parte es el encabezado de la página -->
+    {% block header %}
+    <header>
+      <div class="px-3 py-2 bg-black text-white">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+              <h4 data-bs-toggle="tooltip" data-bs-placement="right" title="Easy Renting">EASY RENTING</h4>
+              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+            </a>
+  
+            <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+              <li class="circle">
+                <a href="/index" class="nav-link text-white text-center button">
+                  <i class="fas fa-home bi d-block mx-auto mb-1"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="circle">
+                <a href="/dptos" class="nav-link text-white text-center button">
+                  <i class="fas fa-city bi d-block mx-auto mb-1"></i>   
+                  Departamentos
+                </a>
+              </li>
+              <li class="circle">
+                <a href="/servicios" class="nav-link text-white text-center button">
+                  <i class="fas fa-glass-cheers bi d-block mx-auto mb-1"></i>                  
+                  Servicios
+                </a>
+              </li>
+              <li class="col-sm nav-item dropdown">
+                <a href="#" class="circle nav-link text-white col text-center dropdown-toggle button" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-user-circle bi d-block mx-auto mb-1"></i>
+                  {{request.user.username}}
+                </a>
+                <ul class="dropdown-menu col-lg-6" aria-labelledby="dropdownMenuButton1" >
+                  <li><a class="dropdown-item" href="#">Cuenta</a></li>
+                  <li><a class="dropdown-item" href="{% url 'password_reset' %}">Cambiar contraseña</a></li>
+                  <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <script>
+        let tween = gsap.from('.circle', {
+        duration: .3,
+        y: -200, //'random(-500,500)',
+        scale: 0,
+        stagger: 0.5,
+        delay: 1 // it's better to use timeline
+        });
+
+    </script>
+
+    {% endblock %}
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="notification">
+           {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+<!-- Contenido de página-->
+
+    {% block content %}
+    <!-- Carrusel de imagenes -->
+    <div class="b-example-divider"></div>
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item">
+            <img src="https://p4.wallpaperbetter.com/wallpaper/69/955/609/landscape-photography-nature-sunset-wallpaper-preview.jpg" class="d-block w-100" width="120" height="500" alt="carrusel1">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Viña del mar</h5>
+              <p>Ciudad costera con hartos jardines, playas y edificios altos.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="http://alagoas.cl/condominio-asturias/wp-content/uploads/2020/10/slide-la-serena.png" class="d-block w-100" width="120" height="500" alt="carrusel2">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>La Serena</h5>
+              <p>Tranquilidad en las playas, observatorios astronómicos y turísticos.</p>
+            </div>
+          </div>
+          <div class="carousel-item active">
+            <img src="https://i.ytimg.com/vi/-2wJ0-qQZIk/maxresdefault.jpg" class="d-block w-100" width="120" height="500" alt="carrusel3">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Pucón</h5>
+              <p>Cercano a los lagos más lindos del país.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- Contenido con información de la empresa -->
+    <div class="container px-4 py-5" id="featured-3">
+      <div class="text-center" style="background: rgb(0, 0, 0); padding-top: 20px; padding-left: 20px;">
+        <h1 class="pb-2" style="color: white;">Nosotros <i class="fad fa-users" style="color: #1fe618;"></i></h1>
+        <hr>
+      </div>
+      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="feature col">
+          <div class="feature-icon bg-primary bg-gradient">
+            <i class="far fa-building"></i>
+          </div>
+          <h2>¿Qué es Easy Renting?</h2>
+          <p>Easy Renting es un proyecto de la empresa <strong>"Turismo Real"</strong> 
+            el cual busca facilitar a los usuarios de esta empresa el arriendo online de 
+            sus variados departamentos a lo largo de todo Chile.</p>
+          <a href="#" class="icon-link">
+            Leer más...
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"/></svg>
+          </a>
+        </div>
+        <div class="feature col">
+          <div class="feature-icon bg-primary bg-gradient">
+            <i class="far fa-thumbs-up"></i>
+          </div>
+          <h2>Experiencia</h2>
+          <p>Turismo real, lleva más de 10 años trabajando en arriendos departamentales en zonas 
+            turíticas como La Serena, Puerto Varas, Villarrica, entre muchos otros destinos 
+            de este hermoso país llamado <strong>Chile.</strong></p>
+          <a href="#" class="icon-link">
+            Leer más...
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"/></svg>
+          </a>
+        </div>
+        <div class="feature col">
+          <div class="feature-icon bg-primary bg-gradient">
+            <i class="fas fa-award"></i>
+          </div>
+          <h2>Objetivo</h2>
+          <p>El objetivo de la empresa es generar la mejor experiencia a sus <strong>clientes.</strong> Conforme
+             pasa el tiempo lo que se busca es mejorar tanto a nivel físico como a nivel virtual.</p>
+          <a href="#" class="icon-link">
+            Leer más...
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block footer %}
+    <!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom col-lg-12">
+    <!-- Left -->
+    <div class="me-5 d-none d-lg-block col-lg-6">
+      <br>
+      
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div class="container p-4 pb-0 col-lg-6">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <span class="text-center">Conéctate con nosotros en las redes sociales:</span><br>
+        <!-- Facebook -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #3b5998;"
+          href="#!"
+          role="button"
+          title="Faceboook"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
+  
+        <!-- Twitter -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #55acee;"
+          href="#!"
+          role="button"
+          title="Twitter"
+          ><i class="fab fa-twitter"></i
+        ></a>
+  
+        <!-- Google -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #dd4b39;"
+          href="#!"
+          role="button"
+          title="Gmail"
+          ><i class="fab fa-google"></i
+        ></a>
+  
+        <!-- Instagram -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #ac2bac;"
+          href="#!"
+          role="button"
+          title="Instagram"
+          ><i class="fab fa-instagram"></i
+        ></a>
+  
+        <!-- Linkedin -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #0082ca;"
+          href="#!"
+          role="button"
+          title="Linkedin"
+          ><i class="fab fa-linkedin-in"></i
+        ></a>
+        <!-- Github -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: rgb(218, 218, 40);"
+          href="#!"
+          role="button"
+          ><i class="fab fa-snapchat"></i
+        ></a>
+      </section>
+      <!-- Section: Social media -->
+    </div>
+    
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-building"></i> Easy Renting
+          </h6>
+          <p>
+            Contamos con certificaciones del <strong>SERNATUR</strong>. 
+            El sello de calidad turítica y tambien el distintivo del turismo sustentable.
+          </p>
+          <img src="{% static '/img/sello.png' %}" alt="Sello turistico" width="100">
+          <img src="{% static '/img/sustentable.png' %}" alt="Sello turistico" width="120">
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Servicios
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Transportes</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Tours</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Cocina</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Entretención</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Información
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Turismo real</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Sernatur</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Experiencia</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Ayuda</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+          Contacto
+          </h6>
+          <p><i class="fas fa-home me-3"></i>Av. Andrés Bello 2428, Ñuñoa.</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+          jor.paredes1925@gmail.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i>+ 569 6462 1430</p>
+          <p><i class="fas fa-print me-3"></i>+ 526 6754 8812</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="#">Easyrenting.cl</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+    {% endblock %}
+</body>
+</html>
