@@ -1,0 +1,375 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block header %}
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Información</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar" aria-label="Search">
+        <div class="navbar-nav">
+        <div class="nav-item text-nowrap">
+            <a class="nav-link px-3" href="/index"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+
+<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">
+                <i class="fas fa-id-badge"> </i>
+                Datos del usuario.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#tusdepartamentos">
+                <i class="fas fa-city"></i>
+                Departamentos.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#tustransportes">
+                <i class="fas fa-bus-alt"></i>
+                Transportes.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#serviciosextras">
+                <i class="fas fa-cocktail"></i>
+                Servicios extras.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#tusopiniones">
+                <i class="far fa-comment-alt"></i>
+                Opinión.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#configuraciones">
+                <i class="fas fa-cogs"></i>
+                Configuraciones.
+                </a>
+            </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Opciones rápidas</span>
+            <a class="link-secondary" href="#" aria-label="Add a new report">
+                <span data-feather="plus-circle"></span>
+            </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="#modificardatos">
+                <i class="fas fa-user-edit"></i>
+                Modificar datos.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#tucontraseña">
+                <i class="fas fa-unlock-alt"></i>
+                Cambiar contraseña.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#eliminarcuenta">
+                <i class="fas fa-user-minus"></i>
+                Eliminar cuenta.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                <i class="fas fa-sign-out-alt"></i>
+                Cerrar sesión.
+                </a>
+            </li>
+            </ul>
+        </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <br>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i class="fas fa-id-badge"> </i>
+                    Datos de usuario:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1. Usuario:</th>
+                <td>{{request.user.username}}</td>
+                </tr>
+                <tr>
+                <th scope="row">2. Nombre:</th>
+                <td>{{request.user.first_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">3. Apellido:</th>
+                <td>{{request.user.last_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">4. Correo electrónico:</th>
+                <td>{{request.user.email}}</td>
+                </tr>
+                <tr>
+                <th scope="row">5. Te uniste a nosotros el: </th>
+                <td>{{request.user.date_joined}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i id="tusdepartamentos" class="fas fa-city"> </i>
+                    Tus arriendos de departamento:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1. Usuario:</th>
+                <td>{{request.user.username}}</td>
+                </tr>
+                <tr>
+                <th scope="row">2. Nombre:</th>
+                <td>{{request.user.first_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">3. Apellido:</th>
+                <td>{{request.user.last_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">4. Correo electrónico:</th>
+                <td>{{request.user.email}}</td>
+                </tr>
+                <tr>
+                <th scope="row">5. Te uniste a nosotros el: </th>
+                <td>{{request.user.date_joined}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i id="tustransportes" class="fas fa-bus-alt"> </i>
+                    Tus servicios de transporte:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1. Usuario:</th>
+                <td>{{request.user.username}}</td>
+                </tr>
+                <tr>
+                <th scope="row">2. Nombre:</th>
+                <td>{{request.user.first_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">3. Apellido:</th>
+                <td>{{request.user.last_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">4. Correo electrónico:</th>
+                <td>{{request.user.email}}</td>
+                </tr>
+                <tr>
+                <th scope="row">5. Te uniste a nosotros el: </th>
+                <td>{{request.user.date_joined}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i id="serviciosextras" class="fas fa-cocktail"> </i>
+                    Tus servicios extra:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1. Usuario:</th>
+                <td>{{request.user.username}}</td>
+                </tr>
+                <tr>
+                <th scope="row">2. Nombre:</th>
+                <td>{{request.user.first_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">3. Apellido:</th>
+                <td>{{request.user.last_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">4. Correo electrónico:</th>
+                <td>{{request.user.email}}</td>
+                </tr>
+                <tr>
+                <th scope="row">5. Te uniste a nosotros el: </th>
+                <td>{{request.user.date_joined}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i id="tusopiniones" class="far fa-comment-alt"> </i>
+                    Tus opiniones:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1. Usuario:</th>
+                <td>{{request.user.username}}</td>
+                </tr>
+                <tr>
+                <th scope="row">2. Nombre:</th>
+                <td>{{request.user.first_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">3. Apellido:</th>
+                <td>{{request.user.last_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">4. Correo electrónico:</th>
+                <td>{{request.user.email}}</td>
+                </tr>
+                <tr>
+                <th scope="row">5. Te uniste a nosotros el: </th>
+                <td>{{request.user.date_joined}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i id="configuraciones" class="fas fa-cogs"> </i>
+                    Configuraciones:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1. Usuario:</th>
+                <td>{{request.user.username}}</td>
+                </tr>
+                <tr>
+                <th scope="row">2. Nombre:</th>
+                <td>{{request.user.first_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">3. Apellido:</th>
+                <td>{{request.user.last_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">4. Correo electrónico:</th>
+                <td>{{request.user.email}}</td>
+                </tr>
+                <tr>
+                <th scope="row">5. Te uniste a nosotros el: </th>
+                <td>{{request.user.date_joined}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Opciones rápidas</h3>
+        <hr>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i id="modificardatos" class="fas fa-user-edit"> </i>
+                    Modifica tus datos:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1. Usuario:</th>
+                <td>{{request.user.username}}</td>
+                </tr>
+                <tr>
+                <th scope="row">2. Nombre:</th>
+                <td>{{request.user.first_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">3. Apellido:</th>
+                <td>{{request.user.last_name}}</td>
+                </tr>
+                <tr>
+                <th scope="row">4. Correo electrónico:</th>
+                <td>{{request.user.email}}</td>
+                </tr>
+                <tr>
+                <th scope="row">5. Te uniste a nosotros el: </th>
+                <td>{{request.user.date_joined}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i id="tucontraseña" class="fas fa-unlock-alt"> </i>
+                    Cambia tu contraseña:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+        </table>
+        <button><a class="dropdown-item" href="{% url 'password_reset' %}">Cambiar contraseña</a></button>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">
+                    <i id="eliminarcuenta" class="fas fa-user-minus"> </i>
+                    Eliminar tu cuenta:
+                </th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+        </table>  
+
+        
+                    
+        </main>
+    </div>
+</div>
+{% block footer %}
+{% endblock %}
+{% endblock %}

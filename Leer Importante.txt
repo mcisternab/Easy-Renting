@@ -1,0 +1,2 @@
+La base de datos que utilizamos es SQL Server y trabajamos a nivel local, y las tablas que se 
+generaron son propias de Django.Por ahora solo tenemos las tablas correspondiente a la creación de usuarios.

@@ -11,8 +11,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/dashboard/">
     <link rel="stylesheet" href="{% static '/css/estilos.css' %}">
     <link rel="stylesheet" href="{% static '/css/features.css' %}">
+    <link rel="stylesheet" href="{% static '/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style7.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style_common.css' %}">
+    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
 
     <!-- Se integra JS de boostrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
@@ -20,6 +25,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+    <script src="{% static '/js/sticker.min.js' %}"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+
+
     {% endblock %}
 </head>
 <body>
@@ -27,12 +40,11 @@
     <!-- Esta parte es el encabezado de la página -->
     {% block header %}
     <header>
-      <div class="px-3 py-2 bg-black text-white">
+      <div class="px-3 py-2 bg-black text-white fixed-top">
         <div class="container">
           <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
               <h4 data-bs-toggle="tooltip" data-bs-placement="right" title="Easy Renting">EASY RENTING</h4>
-              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
             </a>
   
             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
@@ -60,9 +72,9 @@
                   {{request.user.username}}
                 </a>
                 <ul class="dropdown-menu col-lg-6" aria-labelledby="dropdownMenuButton1" >
-                  <li><a class="dropdown-item" href="#">Cuenta</a></li>
+                  <li><a class="dropdown-item" href="/cuenta">Cuenta</a></li>
                   <li><a class="dropdown-item" href="{% url 'password_reset' %}">Cambiar contraseña</a></li>
-                  <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
+                  <li><a class="dropdown-item"  href="#" onclick="cerrar()">Cerrar sesión</a></li>
                 </ul>
               </li>
             </ul>
@@ -70,31 +82,70 @@
         </div>
       </div>
     </header>
+    <br><br><br>
 
     <script>
         let tween = gsap.from('.circle', {
-        duration: .3,
+        duration: .1,
         y: -200, //'random(-500,500)',
         scale: 0,
         stagger: 0.5,
         delay: 1 // it's better to use timeline
         });
+    </script>
 
+    <script>
+      function cerrar() {
+        Swal.fire({
+          "title":"¿Seguro que desea cerrar sesión?",
+          "icon":"warning",
+          "iconColor":"rgb(253, 61, 61)",
+          "showCancelButton":true,
+          "cancelButtonText":"No, Cancelar",
+          "confirmButtonText":"Si, Estoy seguro",
+          borderColor: 'rgba(0, 0, 0, .15)',
+          background: '#fff',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("https://i.pinimg.com/originals/fe/2f/4c/fe2f4cd8e7620c7a90da91639ed334df.gif")
+            center top
+            no-repeat
+          `,
+        })
+        .then(function(result) {
+          if(result.isConfirmed) {
+            window.location.href = "/logout"
+          }
+        })
+      }
     </script>
 
     {% endblock %}
 
-    {% if messages %}
-      {% for message in messages %}
-        <div class="notification">
-           {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
 
 <!-- Contenido de página-->
 
     {% block content %}
+
+    {% if messages %}
+      {% for m in messages %}
+        <script>
+          Swal.fire({
+          title: '{{m}}',
+          width: 600,
+          padding: '3em',
+          background: '#fff url(/images/trees.png)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("https://1.bp.blogspot.com/-SKigQH0xIfk/WYZr9RCSqfI/AAAAAAAAApI/6zV8XzknsoIFXf-iBSPTycL3T7tpkLdnwCEwYBhgL/s1600/megamanx2_2.gif")
+            center top
+            no-repeat
+          `,
+          
+        })
+        </script>
+      {% endfor %}
+    {% endif %}
     <!-- Carrusel de imagenes -->
     <div class="b-example-divider"></div>
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -138,7 +189,7 @@
     <!-- Contenido con información de la empresa -->
     <div class="container px-4 py-5" id="featured-3">
       <div class="text-center" style="background: rgb(0, 0, 0); padding-top: 20px; padding-left: 20px;">
-        <h1 class="pb-2" style="color: white;">Nosotros <i class="fad fa-users" style="color: #1fe618;"></i></h1>
+        <h1 class="pb-2" style="color: white;">Nosotros <i class="fas fa-users-crown" style="color: #1fe618;"></i></h1>
         <hr>
       </div>
       <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
@@ -182,6 +233,131 @@
         </div>
       </div>
     </div>
+
+<!--Pegatinas estilos-->
+<style type="text/css">
+    .sticker {
+        position: relative;
+        width: 180px;
+        margin: 10px;
+        align-items: center;
+    }
+
+    .example-1 .sticker-img {
+        background-image: url("{% static '/img/farol.jpg' %}");
+        background-repeat: no-repeat;
+    }
+
+    .example-2 .sticker-img {
+        background-image: url("{% static '/img/puerto.jpg' %}");
+    }
+
+    .example-3 .sticker-img {
+        background-image: url("{% static '/img/vista.jpg' %}");
+    }
+
+    .example-4 .sticker-img {
+        background-image: url("{% static '/img/isla.jpg' %}");
+    }
+
+    .example-5 .sticker-img {
+        background-image: url("{% static '/img/noche.jpg' %}");
+    }
+
+    .example-6 .sticker-img {
+        background-image: url("{% static '/img/Caleta.jpg' %}");
+    }
+
+    .example-7 .sticker-img {
+        background-image: url("{% static '/img/viña.jpg' %}");
+    }
+
+    .example-8 .sticker-img {
+        background-image: url("{% static '/img/huilo.jpeg' %}");
+    }
+
+    .example-9 .sticker-img {
+        background-image: url("{% static '/img/beach.jpg' %}");
+    }
+
+    .example-10 .sticker-img {
+        background-image: url("{% static '/img/laguna.jpg' %}");
+    }
+    #tooltip {
+    background-color: #1fe618;
+    color: black;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 15px;
+    font-size: 13px;
+    text-align: center;
+    margin-left: 40px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+      }
+</style>
+
+  <!--Pegatinas-->
+  <div class="container px-4 py-5" id="featured-3">
+    <div class="text-center" style="background: rgb(0, 0, 0); padding-top: 20px; padding-left: 20px;">
+      <h1 class="pb-2" style="color: white;">Nuestras zonas <i class="fas fa-map-signs" style="color: #1fe618;"></i></h1>
+      <hr>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script>
+    const button = document.querySelector('#button');
+    const tooltip = document.querySelector('#tooltip');
+
+  // Pass the button, the tooltip, and some options, and Popper will do the
+  // magic positioning for you:
+  Popper.createPopper(button, tooltip, {
+    placement: 'top',
+  });
+</script>
+
+<div class="row" style="margin-left: 140px; margin-right: 140px;">
+  <div class="sticker example-1" title="La Serena" aria-describedby="tooltip">
+    <div id="tooltip" role="tooltip">La Serena</div>
+  </div>
+  <div class="sticker example-2" title="Puerto Montt">
+    <div id="tooltip" role="tooltip">Puerto Montt
+      <div id="arrow" data-popper-arrow></div>
+    </div>
+  </div>
+  <div class="sticker example-3" title="Pucón">
+    <div id="tooltip" role="tooltip">Pucón</div>
+  </div>
+  <div class="sticker example-4" title="Chiloé">
+    <div id="tooltip" role="tooltip">Chiloé</div>
+  </div>
+  <div class="sticker example-5" title="Coquimbo">
+    <div id="tooltip" role="tooltip">Coquimbo</div>
+  </div>
+  <div class="sticker example-8" title="Villarrica">
+    <div id="tooltip" role="tooltip">La Serena</div>
+  </div>
+  <div class="sticker example-9" title="Valparaiso">
+    <div id="tooltip" role="tooltip">Villarrica</div>
+  </div>
+  <div class="sticker example-6" title="Puerto Varas">
+    <div id="tooltip" role="tooltip">Puerto Varas</div>
+  </div>
+  <div class="sticker example-7" title="Viña Del Mar">
+    <div id="tooltip" role="tooltip">Viña Del Mar</div>
+  </div>
+  <div class="sticker example-10" title="Lican Ray">
+    <div id="tooltip" role="tooltip">Lican Ray</div>
+  </div>
+</div>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            Sticker.init('.sticker');
+        }
+    </script>
     {% endblock %}
 
     {% block footer %}
@@ -200,10 +376,10 @@
     <div class="container p-4 pb-0 col-lg-6">
       <!-- Section: Social media -->
       <section class="mb-4">
-        <span class="text-center">Conéctate con nosotros en las redes sociales:</span><br>
+        <span class="text-center">Conéctate con nosotros en las redes sociales:</span><br><br>
         <!-- Facebook -->
         <a
-          class="btn btn-primary btn-floating m-1"
+          class="social btn btn-primary btn-floating m-1"
           style="background-color: #3b5998;"
           href="#!"
           role="button"
@@ -213,7 +389,7 @@
   
         <!-- Twitter -->
         <a
-          class="btn btn-primary btn-floating m-1"
+          class="social btn btn-primary btn-floating m-1"
           style="background-color: #55acee;"
           href="#!"
           role="button"
@@ -223,7 +399,7 @@
   
         <!-- Google -->
         <a
-          class="btn btn-primary btn-floating m-1"
+          class="social btn btn-primary btn-floating m-1"
           style="background-color: #dd4b39;"
           href="#!"
           role="button"
@@ -233,7 +409,7 @@
   
         <!-- Instagram -->
         <a
-          class="btn btn-primary btn-floating m-1"
+          class="class social btn btn-primary btn-floating m-1"
           style="background-color: #ac2bac;"
           href="#!"
           role="button"
@@ -243,7 +419,7 @@
   
         <!-- Linkedin -->
         <a
-          class="btn btn-primary btn-floating m-1"
+          class="social btn btn-primary btn-floating m-1 "
           style="background-color: #0082ca;"
           href="#!"
           role="button"
@@ -252,13 +428,26 @@
         ></a>
         <!-- Github -->
         <a
-          class="btn btn-primary btn-floating m-1"
+          class="social box btn btn-primary btn-floating m-1"
           style="background-color: rgb(218, 218, 40);"
           href="#!"
           role="button"
           title="Snapchat"
           ><i class="fab fa-snapchat"></i
         ></a>
+
+        <script>
+          var yMove = 10;
+          gsap.to(".social", {
+          delay: 0.5,
+          duration: 1,
+          repeat: -1,
+          yoyo: true,
+          y: function(i, elem, boxes) {
+            return i % 2 === 1 ? -yMove : yMove;
+          }
+           });
+        </script>  
       </section>
       <!-- Section: Social media -->
     </div>
@@ -353,7 +542,7 @@
   <!-- Copyright -->
   <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
     © 2021 Copyright:
-    <a class="text-reset fw-bold" href="#">Easyrenting.cl</a>
+    <a class="text-reset fw-bold" href="/">Easyrenting.cl</a>
   </div>
   <!-- Copyright -->
 </footer>

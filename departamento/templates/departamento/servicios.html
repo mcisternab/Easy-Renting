@@ -5,74 +5,252 @@
 {% block content %}
 <div class="b-example-divider"></div>
 
+<!--Efectos hover-->
+
   <div class="container px-4 py-5" id="custom-cards">
     <h2 class="pb-2 border-bottom">Servicios</h2>
-    <p style="font-size: 30px;">Aquí les dejamos algunos de los tantos servicios extras que la empresa les ofrece a sus clientes. 
-      Servicios de transportes, gastronomía, tours a lo largo del país, entre otros.</p>
+    <p style="font-size: 30px;">Observa nuetsros diferentes tipos de servicios extras que tenemos para ti.</p>
 
-    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
-      <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('https://asset1.zankyou.com/images/mag-post/198/cff8/685//-/cl/wp-content/uploads/2018/09/banqueteras-de-matrimonio-en-santiago-carla-fischer-1.jpg');">
-          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Banquete, festín celestial</h2>
-            <ul class="d-flex list-unstyled mt-auto">
-              <li class="me-auto">
-                <img src="{% static '/img/llaves.png' %}" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
-              </li>
-              <li class="d-flex align-items-center me-3">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
-                <small>Frutillar</small>
-              </li>
-              <li class="d-flex align-items-center">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
-                <small>3</small>
-              </li>
-            </ul>
+  <!-- Imagenes hover-->
+  <section class="main">
+    <ul class="ch-grid">
+      <li>
+        <div class="ch-item">	
+          <div class="ch-info">
+            <br>
+            <i class="fas fa-plane fa-2x"></i>
+            <p>Variedad en tours. <a href="/listadoServicios">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
           </div>
+          <div class="ch-thumb ch-img-1"></div>
         </div>
-      </div>
-
-      <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('https://vulcanopro.s3.amazonaws.com/images/lar_O5vSI0Z6VkZLBYpmXUt7XJFkUCHMsPiMdvTtIlgH.jpeg');">
-          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Actividades al aire libre</h2>
-            <ul class="d-flex list-unstyled mt-auto">
-              <li class="me-auto">
-                <img src="{% static '/img/llaves.png' %}" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
-              </li>
-              <li class="d-flex align-items-center me-3">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
-                <small>Puerto Varas</small>
-              </li>
-              <li class="d-flex align-items-center">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
-                <small>4d</small>
-              </li>
-            </ul>
+      </li>
+      <li>
+        <div class="ch-item">
+          <div class="ch-info">
+            <br>
+            <i class="fas fa-car-alt fa-2x"></i>
+            <p>Comodidad en transportes.<a href="/transporte">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
           </div>
+          <div class="ch-thumb ch-img-2"></div>
         </div>
-      </div>
-
-      <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('https://w0.peakpx.com/wallpaper/921/744/HD-wallpaper-revell-bus-modern-buses-new-buses-passenger-transportations.jpg');">
-          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"></h2>
-            <ul class="d-flex list-unstyled mt-auto">
-              <li class="me-auto">
-                <img src="{% static '/img/llaves.png' %}" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
-              </li>
-              <li class="d-flex align-items-center me-3">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
-                <small>La Serena</small>
-              </li>
-              <li class="d-flex align-items-center">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
-                <small>5d</small>
-              </li>
-            </ul>
+      </li>
+      <li>
+        <div class="ch-item">
+          <div class="ch-info">
+            <br>
+            <i class="fas fa-utensils fa-2x"></i>
+            <p>Comidas<a href="#">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
           </div>
+          <div class="ch-thumb ch-img-3"></div>
+        </div>
+      </li><br>
+      <li>
+        <div class="ch-item">	
+          <div class="ch-info">
+            <br>
+            <img class="fa-2x" src="{% static '/img/iconorafting.png' %}" alt="iconorafting" width="50px">
+            <p>Diversión en rafting. <a href="#">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
+          </div>
+          <div class="ch-thumb ch-img-4"></div>
+        </div>
+      </li>
+      <li>
+        <div class="ch-item">	
+          <div class="ch-info">
+            <br>
+            <img class="fa-2x" src="{% static '/img/canopyicono.png' %}" alt="canopyicono" width="40px">
+            <p>Actividad canopy. <a href="#">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
+          </div>
+          <div class="ch-thumb ch-img-5"></div>
+        </div>
+      </li>
+      <li>
+        <div class="ch-item">	
+          <div class="ch-info">
+            <br>
+            <i class="fas fa-hiking fa-2x"></i>
+            <p>Excursionismos por lindos lugares. <a href="#">Ver tema. <br><i class="fas fa-info-circle fa-2x"></i></a></p>
+          </div>
+          <div class="ch-thumb ch-img-6"></div>
+        </div>
+      </li>
+    </ul>
+</section>
+
+<!--3 cajitas-->
+
+<div data-aos="flip-right" data-aos-duration="3000" class="row">
+  <h3 class="text-center">En Easy Renting, tenemos variedad en banquetes, actividades y transportes.</h3>
+  <!--Servicio 1-->
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm view view-seventh">
+          <img class="bd-placeholder-img card-img-top" src="https://www.zankyou.cl/images/mag-card-c/53f/a335/878/623/-/cl/wp-content/uploads/2019/07/o.jpg" alt="" width="100%" height="225">
+          <div class="mask">
+            <h2>Banquetes <i class="fas fa-utensils"></i></h2>
+            <p>Tenemos grandiosos banquetes, buffet y catering.</p>
+            <a href="#" class="info">Leer más</a>
         </div>
       </div>
     </div>
+  <!--Servicio 2-->
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm view view-seventh">
+          <img class="bd-placeholder-img card-img-top" src="https://s1.1zoom.me/big0/639/Chile_Parks_Rivers_495360.jpg" alt="Parque" width="100%" height="225">
+          <div class="mask">
+            <h2>Actividades al aire libre <i class="fas fa-biking"></i></h2>
+            <p>Diversidad en actividades, dependiendo del lugar que elijas como destino.</p>
+            <a href="#" class="info">Leer más</a>
+        </div>
+      </div>
+    </div>
+  <!--Servicio 3-->
+  <div class="col-md-4">
+    <div class="card mb-4 shadow-sm view view-seventh">
+        <img class="bd-placeholder-img card-img-top" src="https://besthqwallpapers.com/Uploads/6-12-2019/114416/thumb2-scania-interlink-hd-4k-studio-2019-buses-passenger-transport.jpg" alt="" width="100%" height="225">
+        <div class="mask">
+          <h2>Transportes <i class="fas fa-bus-alt"></i></h2>
+          <p>Transportes a los diferentes destinos de nuestros departamentos.</p>
+          <a href="#" class="info">Leer más</a>
+      </div>
+    </div>
   </div>
+</div>
+
+<!--Más Servicios-->
+<main class="container py-5">
+  <h3 class="text-center">Motivate y atrevete a participar.</h3><br><br><br>
+  <div class="row" data-masonry='{"percentPosition": true }'>
+    <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-right" data-aos-duration="2000">
+      <div class="card">
+        <img src="{% static '/img/Paisaje.jpg' %}" />
+        <div class="card-body">
+          <h5 class="card-title">Grandes paisajes</h5>
+          <p class="card-text">Paisajes hermosos a lo largo de todo Chile.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <br><br>
+      <div class="card p-3">
+        <figure class="p-3 mb-0">
+          <blockquote class="blockquote">
+            <p>Cada vez se espera agregar mejoras a nuestros Servicios.</p>
+          </blockquote>
+        </figure>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-left" data-aos-duration="2000" data-aos-delay="1000">
+      <div class="card">
+        <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="{% static '/img/ChileTurismo.jpg' %}" alt="">
+        <div class="card-body">
+          <h5 class="card-title">Trekking</h5>
+          <p class="card-text">consiste en caminar por escenarios naturales, como montañas, bosques, selvas, etc.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <br><br><br>
+      <div class="card bg-primary text-white text-center p-3">
+        <figure class="mb-0">
+          <blockquote class="blockquote">
+            <p>“El viajero ve lo que ve, el turista ve lo que ha venido a ver.”</p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0 text-white">
+            Frase dicha por <cite title="Source Title">Gilbert Keith Chesterton.</cite>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="1500">
+      <div class="card">
+        <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="{% static '/img/vistaChile.jpg' %}" alt="">
+        <div class="card-body">
+          <h5 class="card-title">Frutillar</h5>
+          <p class="card-text"> Los edificios de madera de estilo alemán son característicos de la ciudad y reflejan su pasado colonial.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <br><br><br>
+      <div class="card bg-primary text-white text-center p-3">
+        <figure class="mb-0">
+          <blockquote class="blockquote">
+            <p>“Viajamos para cambiar, no de lugar, sino de ideas.”</p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0 text-white">
+            Frase dicha por <cite title="Source Title">Hippolyte Taine.</cite>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-right" data-aos-duration="2000">
+      <div class="card">
+        <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="{% static '/img/canopy2.jpg' %}" alt="">
+        <div class="card-body">
+          <h5 class="card-title">Canopy</h5>
+          <p class="card-text">El canopy o dosel es un deporte que consiste en suspenderse y deslizarse por los aires mediante cables que están entrelazados de esquina a esquina entre las ramas de los árboles.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <br><br>
+      <div class="card p-3">
+        <figure class="p-3 mb-0">
+          <blockquote class="blockquote">
+            <p>Diferentes tipos de actividades para nuestros diferentes tipos de clientes.</p>
+          </blockquote>
+        </figure>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-left" data-aos-duration="2000" data-aos-delay="1000">
+      <div class="card">
+        <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="{% static '/img/rafting2.jpg' %}" alt="">
+        <div class="card-body">
+          <h5 class="card-title">Rafting</h5>
+          <p class="card-text">El Rafting es una actividad deportiva y recreativa que consiste en recorrer el río en la dirección de la corriente.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <br><br><br>
+      <div class="card bg-primary text-white text-center p-3">
+        <figure class="mb-0">
+          <blockquote class="blockquote">
+            <p>“El placer de los banquetes debe medirse no por la abundancia de los manjares, 
+              sino por la reunión de los amigos y por su conversación”</p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0 text-white">
+            Frase dicha por <cite title="Source Title">Gilbert Keith Chesterton.</cite>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="1500">
+      <div class="card">
+        <img class="bd-placeholder-img card-img-top" width="100%" height="200" src="{% static '/img/banquete2.jpg' %}" alt="">
+        <div class="card-body">
+          <h5 class="card-title">Festín celestial</h5>
+          <p class="card-text">Gran comida fastuosa o solemne que reúne a un gran número de comensales en ocasión de una fiesta.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <br><br><br>
+      <div class="card bg-primary text-white text-center p-3">
+        <figure class="mb-0">
+          <blockquote class="blockquote">
+            <p>“El mejor banquete del mundo no merece ser degustado a menos que se tenga a alguien para compartirlo.”</p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0 text-white">
+            Frase dicha por <cite title="Source Title">Groucho Marx.</cite>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  AOS.init();
+</script>
 {% endblock %}

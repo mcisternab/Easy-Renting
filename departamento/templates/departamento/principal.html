@@ -8,25 +8,92 @@
 <!--Contenido para todos los navegantes de la web-->
 <div class="container">
     <header class="blog-header py-3 col-lg-12" style="background-color: black; padding: 10px;">
-      <div class="row flex-nowrap justify-content-between align-items-center">
-        <div class="col-4 pt-1">
-          <a class="link text-white" href="#">Subscribete</a>
+      {% if user.is_authenticated %}
+      <div class="px-3 py-2 bg-black text-white">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+              <h4 data-bs-toggle="tooltip" data-bs-placement="right" title="Easy Renting">EASY RENTING</h4>
+            </a>
+  
+            <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+              <li class="circle">
+                <a href="/index" class="nav-link text-white text-center button">
+                  <i class="fas fa-home bi d-block mx-auto mb-1"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="circle">
+                <a href="/dptos" class="nav-link text-white text-center button">
+                  <i class="fas fa-city bi d-block mx-auto mb-1"></i>   
+                  Departamentos
+                </a>
+              </li>
+              <li class="circle">
+                <a href="/servicios" class="nav-link text-white text-center button">
+                  <i class="fas fa-glass-cheers bi d-block mx-auto mb-1"></i>                  
+                  Servicios
+                </a>
+              </li>
+              <li class="col-sm nav-item dropdown">
+                <a href="#" class="circle nav-link text-white col text-center dropdown-toggle button" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-user-circle bi d-block mx-auto mb-1"></i>
+                  {{request.user.username}}
+                </a>
+                <ul class="dropdown-menu col-lg-6" aria-labelledby="dropdownMenuButton1" >
+                  <li><a class="dropdown-item" href="/cuenta">Cuenta</a></li>
+                  <li><a class="dropdown-item" href="{% url 'password_reset' %}">Cambiar contraseña</a></li>
+                  <li><a class="dropdown-item" href="#" onclick="cerrar()">Cerrar sesión</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="col-4 text-center">
+      </div>
+      {% else %}
+      <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="col-7" style="text-align: right;">
           <H4>Easy Renting</H4>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
-          <a class="btn btn-primary button" href="/login">Iniciar sesión <i class="fas fa-sign-in-alt"></i></a>
-          <a class="link-secondary" href="#" aria-label="Search">
-            
-          </a>
+          <a href="/login">
+            <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Iniciar sesión <i class="fas fa-sign-in-alt"></i></button>
+          </a>   
         </div>
+        {% endif %}
       </div>
     </header>
+
+    <!--Script mensaje-->
+    <script>
+      function cerrar() {
+        Swal.fire({
+          "title":"¿Seguro que desea cerrar sesión?",
+          "icon":"warning",
+          "iconColor":"rgb(253, 61, 61)",
+          "showCancelButton":true,
+          "cancelButtonText":"No, Cancelar",
+          "confirmButtonText":"Si, Estoy seguro",
+          borderColor: 'rgba(0, 0, 0, .15)',
+          background: '#fff',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("https://i.pinimg.com/originals/fe/2f/4c/fe2f4cd8e7620c7a90da91639ed334df.gif")
+            center top
+            no-repeat
+          `,
+        })
+        .then(function(result) {
+          if(result.isConfirmed) {
+            window.location.href = "/logout"
+          }
+        })
+      }
+    </script>
   </div>
   <br>
   <main class="container">
-    <div class="p-4 p-md-5 mb-4 text-white rounded" style="background-color: rgb(160, 88, 228);">
+    <div class="p-4 p-md-5 mb-4 text-white rounded" style="background-color: rgb(68, 190, 52)">
       <div class="col-md-6 px-0">
         <h1 class="display-4 fst-italic">Animate a vivir la experiencia con nosotros.</h1>
         <p class="lead my-3">Contamos con más de 10 departamentos a lo largo de todo Chile. ¿Cual será tu proximo destino?.</p>
@@ -45,7 +112,7 @@
             <a href="#" class="stretched-link">Continuar leyendo</a>
           </div>
           <div class="col-auto d-none d-lg-block">
-            <img src="https://pbs.twimg.com/media/DEZM9R3WAAQCPsq.jpg" alt="" width="200" height="250">
+            <img src="https://mediaim.expedia.com/destination/1/7a0c0d457fdd4754822b09e3b1ba2309.jpg" alt="Vina Del Mar" width="200" height="250">
           </div>
         </div>
       </div>

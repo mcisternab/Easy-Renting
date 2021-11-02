@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+SOCIAL_AUTH_FACEBOOK_KEY = "564414158128713"
+SOCIAL_AUTH_FACEBOOK_SECRET = "f6021da4586ab35ba01468ebca9f92c2"
+
 
 # Application definition
 
@@ -38,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'departamento'
+    'departamento',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends', 
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -78,7 +86,7 @@ WSGI_APPLICATION = 'EasyRenting.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'EasyRenting',
+        'NAME': 'Easy_Renting_DW',
         'USER': 'sa',
         'PASSWORD': 'marxis1991',
         'HOST': 'LAPTOP-5DT9KVEI',
@@ -89,7 +97,6 @@ DATABASES = {
         }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -113,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'es-mx'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -129,6 +136,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+
+]
+
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media") 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -140,6 +157,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'jor.paredes1925@gmail.com'
 EMAIL_HOST_PASSWORD = 'soto1973'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 
