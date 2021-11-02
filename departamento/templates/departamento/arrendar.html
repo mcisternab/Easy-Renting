@@ -26,14 +26,14 @@
                 <h6 class="my-0">Departamento</h6>
                 <small class="text-muted">Brief description</small>
               </div>
-              <span class="text-muted">$12</span>
+              <span class="text-muted">$0</span>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
                 <h6 class="my-0">Transporte</h6>
                 <small class="text-muted">Ida-vuelta</small>
               </div>
-              <span class="text-muted">$8</span>
+              <span class="text-muted">$0</span>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
@@ -88,7 +88,7 @@
                   <span class="input-group-text">@</span>
                   <input type="text" class="form-control" id="username" placeholder="Username" value="{{request.user.username}}" readonly>
                 <div class="invalid-feedback">
-                    Your username is required.
+                    Nombre Usuario Requerido.
                   </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input type="email" class="form-control" id="email" placeholder="usuario@gmail.com" value="{{request.user.email}}" required>
                 <div class="invalid-feedback">
-                  por favor ingresa un email válido.
+                  Por favor, ingresa un email válido.
                 </div>
               </div>
   
@@ -105,7 +105,7 @@
                 <label for="address" class="form-label">Dirección cliente</label>
                 <input type="text" class="form-control" id="address" placeholder="Calle, numeración, zona del país." required>
                 <div class="invalid-feedback">
-                  Por favor introduzca su dirección.
+                  Por favor, introduzca su dirección.
                 </div>
               </div>
 
@@ -119,11 +119,11 @@
               <div class="col-md-5">
                 <label for="country" class="form-label">Zona</label>
                 <select class="form-select" id="country" required>
-                  <option value="">Choose...</option>
+                  <option value="">Elegir...</option>
                   <option>United States</option>
                 </select>
                 <div class="invalid-feedback">
-                  Please select a valid country.
+                  Por favor selecciona una zona.
                 </div>
               </div>
   
