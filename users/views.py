@@ -153,10 +153,12 @@ def listadoServicios(request):
     return render(request, "departamento/listadoServicios.html", data)
 
 def arrendar(request):
+    zonas = Zona.objects.all()
     departamentos = Departamento.objects.all()
 
     data = {
-        'departamentos': departamentos
+        'zonas': zonas,
+        'departamentos': departamentos,
 
     }
 

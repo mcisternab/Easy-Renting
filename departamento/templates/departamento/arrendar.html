@@ -18,13 +18,13 @@
         <div class="col-md-5 col-lg-4 order-md-last">
           <h3 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-primary">Tu carrito <i class="fas fa-cart-arrow-down"></i></span>
-            <span class="badge bg-primary rounded-pill">3</span>
+            <span class="badge bg-primary rounded-pill">0</span>
           </h3>
           <ul class="list-group mb-3">
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
                 <h6 class="my-0">Departamento</h6>
-                <small class="text-muted">Brief description</small>
+                <small class="text-muted">Breve descripción</small>
               </div>
               <span class="text-muted">$0</span>
             </li>
@@ -38,20 +38,20 @@
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
                 <h6 class="my-0">Servicios extra</h6>
-                <small class="text-muted">Brief description</small>
+                <small class="text-muted">Breve descripción</small>
               </div>
-              <span class="text-muted">$5</span>
+              <span class="text-muted">$0</span>
             </li>
             <li class="list-group-item d-flex justify-content-between bg-light">
               <div class="text-success">
                 <h6 class="my-0">Código promoción</h6>
                 <small>ZPQHDNCYHY</small>
               </div>
-              <span class="text-success">−$5</span>
+              <span class="text-success">−$0</span>
             </li>
             <li class="list-group-item d-flex justify-content-between">
               <span>Total ($CLP)</span>
-              <strong>$20</strong>
+              <strong>$0</strong>
             </li>
           </ul>
   
@@ -63,7 +63,7 @@
           </form>
         </div>
         <div class="col-md-7 col-lg-8">
-          <h3 class="mb-3">Datos cliente</h3>
+          <h3 class="mb-3">Datos Cliente <i class="far fa-address-card"></i></h3>
           <form class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-sm-6">
@@ -109,7 +109,7 @@
                 </div>
               </div>
 
-              <h3 class="mb-3">Datos arriendo</h3>
+              <h3 class="mb-3">Datos arriendo <i class="far fa-newspaper"></i></h3>
   
               <div class="col-12">
                 <label for="address2" class="form-label">Dirección destino <span class="text-muted">(Optional)</span></label>
@@ -120,7 +120,9 @@
                 <label for="country" class="form-label">Zona</label>
                 <select class="form-select" id="country" required>
                   <option value="">Elegir...</option>
-                  <option>United States</option>
+                  {% for z in zonas %}
+                    <option>{{ z.nombre }}</option>
+                  {% endfor %}
                 </select>
                 <div class="invalid-feedback">
                   Por favor selecciona una zona.
@@ -130,19 +132,54 @@
               <div class="col-md-4">
                 <label for="state" class="form-label">Departamento</label>
                 <select class="form-select" id="state" required>
-                  <option value="">Elige...</option>
-                  <option>Viña Del Mar</option>
+                  <option value="">Elegir...</option>
+                  {% for d in departamentos %}
+                    <option>{{ d.nombre }}</option>
+                  {% endfor %}
                 </select>
                 <div class="invalid-feedback">
-                  Please provide a valid state.
+                  Por favor, ingresa un departamento.
                 </div>
               </div>
   
               <div class="col-md-3">
-                <label for="zip" class="form-label">Número Departamento</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required>
+                <label for="zip" class="form-label">Cantidad acompañantes</label>
+                <input type="number" class="form-control" id="zip" placeholder="" value="0" required>
                 <div class="invalid-feedback">
-                  Zip code required.
+                  Por favor, ingresa cantidad de acompañantes.
+                </div>
+              </div>
+
+              <!-- Datepicker -->
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="container well">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h2>Events</h2>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-control-wrapper">
+                              <input type="text" id="date-start" class="form-control floating-label" placeholder="Fecha y hora llegada">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-control-wrapper">
+                              <input type="text" id="date-end" class="form-control floating-label" placeholder="Fecha y hora retirada">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  
                 </div>
               </div>
             </div>
@@ -150,13 +187,8 @@
             <hr class="my-4">
   
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="same-address">
-              <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-            </div>
-  
-            <div class="form-check">
               <input type="checkbox" class="form-check-input" id="save-info">
-              <label class="form-check-label" for="save-info">Save this information for next time</label>
+              <label class="form-check-label" for="save-info">Guardar esta información para la próxima vez</label>
             </div>
   
             <hr class="my-4">
@@ -221,5 +253,56 @@
       </div>
     </main>
     <br><br><br><br><br><br>
+
+    <!-- Script Datepicker -->
+    
+		<script type="text/javascript">
+		$(document).ready(function()
+		{
+			$('#date').bootstrapMaterialDatePicker
+			({
+				time: false,
+				clearButton: true
+			});
+
+			$('#time').bootstrapMaterialDatePicker
+			({
+				date: false,
+				shortTime: false,
+				format: 'HH:mm'
+			});
+
+			$('#date-format').bootstrapMaterialDatePicker
+			({
+				format: 'dddd DD MMMM YYYY - HH:mm'
+			});
+			$('#date-fr').bootstrapMaterialDatePicker
+			({
+				format: 'DD/MM/YYYY HH:mm',
+				language: 'es',
+				weekStart: 1, 
+				cancelText : 'ANNULER',
+				nowButton : true,
+				switchOnClick : true
+			});
+
+			$('#date-end').bootstrapMaterialDatePicker
+			({
+				weekStart: 0, format: 'DD/MM/YYYY HH:mm', lang: 'es',
+			});
+			$('#date-start').bootstrapMaterialDatePicker
+			({
+				weekStart: 0, format: 'DD/MM/YYYY HH:mm', shortTime : true, lang: 'es',
+			}).on('change', function(e, date)
+			{
+				$('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
+			});
+
+			$('#min-date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY HH:mm', minDate : new Date() });
+
+			$.material.init()
+		});
+		</script>
+    
     <script src="{% static '/js/form-validation.js' %}"></script>
 {% endblock %}
