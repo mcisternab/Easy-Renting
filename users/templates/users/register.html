@@ -40,19 +40,19 @@
             <label for="password">Contraseña:</label>
             <div class="row">
               <div class="form-group col-lg-10 ">
-                <input id="password1" type="password" class="form-control"  name="password1" minlength="8" maxlength="20" placeholder="Ingrese contraseña" required>
+                <input id="password1" type="password" class="input_clave form-control"  name="password1" minlength="8" maxlength="20" placeholder="Ingrese contraseña" required>
               </div>
               <div class="col-lg-1">
-                <i class="fas fa-eye" style="padding-top: 13px; padding-left: 10px;" onclick="mostrarContrasena()"></i>
+                <i class="icono fas eye-icon fa-eye-slash " style="padding-top: 13px; padding-left: 10px;" onclick="toggle()"></i>
               </div>
               <span id="passstrength"></span>
             </div>
             <div class="row">
               <div class="form-group col-lg-10" style="padding-top: 5px;">
-                <input id="password2" type="password" class="form-control"  name="password2" minlength="8" maxlength="20" placeholder="Repita contraseña" required>
+                <input id="password2" type="password" class="input_clave2 form-control"  name="password2" minlength="8" maxlength="20" placeholder="Repita contraseña" required>
               </div>
               <div class="col-lg-1">
-                <i class="fas fa-eye" style="padding-top: 13px; padding-left: 10px;" onclick="mostrarContrasena2()"></i>
+                <i class="icono2 fas eye-icon fa-eye-slash" style="padding-top: 13px; padding-left: 10px;" onclick="toggle2()"></i>
               </div>
               <span id="passstrength2"></span>
             </div>
@@ -65,19 +65,6 @@
             <hr />
             <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a> </p>
             </form> 
-            <h2 class="fs-5 fw-bold mb-3">Tambien puedes</h2>
-            <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-4">
-              <i class="fab fa-google-plus-g"></i>
-              Registrarte con Twitter
-            </button>
-            <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4">
-              <i class="fab fa-facebook"></i>
-              Registrarte con Facebook
-            </button>
-            <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-4">
-              <i class="fab fa-twitter"></i>
-              Registrarte con GitHub
-            </button>    
         </div>
       </div>
     </div>
@@ -245,26 +232,6 @@
   </footer> 
 
   <script>
-    function mostrarContrasena(){
-        var tipo = document.getElementById("password1");
-        if(tipo.type == "password"){
-            tipo.type = "text";
-        }else{
-            tipo.type = "password";
-        }
-    }
-  </script>
-  <script>
-    function mostrarContrasena2(){
-        var tipo = document.getElementById("password2");
-        if(tipo.type == "password"){
-            tipo.type = "text";
-        }else{
-            tipo.type = "password";
-        }
-    }
-  </script>
-  <script>
     $('#password1').keyup(function(e) {
      var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
      var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
@@ -273,18 +240,16 @@
              $('#passstrength').html('Más caracteres.');
      } else if (strongRegex.test($(this).val())) {
              $('#passstrength').className = 'ok';
-             $('#passstrength').html('Fuerte!');
+             $('#passstrength').html('!Fuerte!');
      } else if (mediumRegex.test($(this).val())) {
              $('#passstrength').className = 'alert';
-             $('#passstrength').html('Media!');
+             $('#passstrength').html('!Media!');
      } else {
              $('#passstrength').className = 'error';
-             $('#passstrength').html('Débil!');
+             $('#passstrength').html('!Débil!');
      }
      return true;
 });
-  </script>
-  <script>
     $('#password2').keyup(function(e) {
      var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
      var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
@@ -293,16 +258,71 @@
              $('#passstrength2').html('Más caracteres.');
      } else if (strongRegex.test($(this).val())) {
              $('#passstrength2').className = 'ok';
-             $('#passstrength2').html('Fuerte!');
+             $('#passstrength2').html('!Fuerte!');
      } else if (mediumRegex.test($(this).val())) {
              $('#passstrength2').className = 'alert';
-             $('#passstrength2').html('Media!');
+             $('#passstrength2').html('!Media!');
      } else {
              $('#passstrength2').className = 'error';
-             $('#passstrength2').html('Débil!');
+             $('#passstrength2').html('!Débil!');
      }
      return true;
 });
+
+    var ojoState = false;
+    function toggle() {
+      var ojo = document.querySelectorAll('.icono');
+      var input = document.querySelectorAll('.input_clave');
+
+      if (ojoState) {
+        input.forEach(i => {
+          i.setAttribute('type', 'password');
+        })
+        ojo.forEach(o => {
+          o.classList.remove('fa-eye');
+          o.classList.add('fa-eye-slash');
+        })
+        ojoState = false;
+      }
+      else {
+        input.forEach(i => {
+          i.setAttribute('type', 'text');
+        })
+        ojo.forEach(o => {
+          o.classList.add('fa-eye');
+          o.classList.remove('fa-eye-slash');
+        })
+        ojoState = true;
+      }
+    }
+
+    var ojoState = false;
+    function toggle2() {
+      var ojo = document.querySelectorAll('.icono2');
+      var input = document.querySelectorAll('.input_clave2');
+
+      if (ojoState) {
+        input.forEach(i => {
+          i.setAttribute('type', 'password');
+        })
+        ojo.forEach(o => {
+          o.classList.remove('fa-eye');
+          o.classList.add('fa-eye-slash');
+        })
+        ojoState = false;
+      }
+      else {
+        input.forEach(i => {
+          i.setAttribute('type', 'text');
+        })
+        ojo.forEach(o => {
+          o.classList.add('fa-eye');
+          o.classList.remove('fa-eye-slash');
+        })
+        ojoState = true;
+      }
+    }
+
   </script>
   </body>
   {% endblock %}

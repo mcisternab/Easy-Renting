@@ -17,6 +17,42 @@
   </div>
 </section>
 
+<style>
+  #motionPath {
+    overflow: visible;
+    height: 100%;
+    max-width: 100%;
+  }
+
+  #motionPath path {
+    stroke-width: 2;
+    stroke: chartreuse;
+  }
+
+  #motionPath .transporte{
+    visibility: hidden;
+  }
+  .transporte {
+    pointer-events: none;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    line-height: 60px;
+    position: absolute;
+    top: 30%;
+    left: 60%;
+    font-size: 32px;
+  }
+</style>
+
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <svg id="motionPath" viewBox="-20 0 557 190">
+      <path id="path" fill="none" d="M8,102 C15,83 58,25 131,24 206,24 233,63 259,91 292,125 328,155 377,155 464,155 497,97 504,74"/> 
+    </svg>
+     <div class="transporte"><img src="{% static '/img/car.png' %}" alt="" width="250"></div>
+  </div>
+</div>
+
 {% load humanize %}
 <div class="album py-5 bg-light">
   <div class="container"> 
@@ -54,9 +90,33 @@
             </div>
         </div>
         {% endfor %}
+        
     </div>
   </div>
 </div>
+
+
+<script>
+  gsap.registerPlugin(MotionPathPlugin);
+
+  gsap.set(".transporte", {scale: 0.5, autoAlpha: 1});
+
+  gsap.to(".transporte", {
+    duration: 5, 
+    repeat: -1,
+    yoyo: true,
+    ease: "power1.inOut",
+    immediateRender: true,
+    motionPath: {
+      path: "#path",
+      align: "#path",
+      alignOrigin: [0.5, 0.5],
+      autoRotate: 90
+    }
+  });
+
+  MotionPathHelper.create(".transporte");
+</script>
 
 <div>
     {% include 'departamento/paginator.html' %}
