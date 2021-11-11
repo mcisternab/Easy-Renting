@@ -69,4 +69,5 @@ class Transporte(models.Model):
     def __str__(self):
         return str(self.patente)
 
-
+class Contacto(models.Model):
+    

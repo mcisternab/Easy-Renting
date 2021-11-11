@@ -103,7 +103,7 @@
   
               <div class="col-12">
                 <label for="address" class="form-label">Dirección cliente</label>
-                <input type="text" class="form-control" id="address" placeholder="Calle, numeración, zona del país." required>
+                <input type="text" class="form-control" id="address" placeholder="Calle, numeración, zona del país." required value="{{request.GET.now}}">
                 <div class="invalid-feedback">
                   Por favor, introduzca su dirección.
                 </div>

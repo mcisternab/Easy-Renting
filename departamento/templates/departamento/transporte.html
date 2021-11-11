@@ -4,7 +4,6 @@
 
 {% block content %}
 
-<div class="b-example-divider"></div>
 <main role="main">
 
 <section class="jumbotron text-center">
@@ -59,7 +58,7 @@
     <!--Buscador-->
     <form action="" method="GET">
         <div class="input-group rounded col-lg-6" style="padding-bottom: 20px;">
-        <input type="search" class="form-control rounded" placeholder="Buscar transporte por: Tipo de servicio, zona del país, departamento al cual corresponda o nombre del conductor." name="buscarTransporte" aria-label="Search"
+        <input type="search" class="form-control rounded" placeholder="Buscar transporte por: Zona del país, departamento al cual corresponda o nombre del conductor." name="buscarTransporte" aria-label="Search"
         aria-describedby="search-addon" value="{{ request.GET.buscarTransporte }}" />
         <button type="submit" class="btn btn-dark">
             <i class="fas fa-search"></i>

@@ -12,6 +12,7 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from departamento.models import Departamento, Servicio, Zona , Transporte
 from django.db.models import Q
+import datetime
 
 def welcome(request):
     # Si estamos identificados devolvemos la portada
@@ -135,6 +136,7 @@ def listadoServicios(request):
     if busqueda:
         servicios = Servicio.objects.filter(
             Q(precio__icontains = busqueda) |
+            Q(zona__nombre__icontains = busqueda) |
             Q(departamento__nombre__icontains = busqueda) |
             Q(tipo__tipo__icontains = busqueda)
         ).distinct()
@@ -153,6 +155,7 @@ def listadoServicios(request):
     return render(request, "departamento/listadoServicios.html", data)
 
 def arrendar(request):
+    now = datetime.datetime.now()
     zonas = Zona.objects.all()
     departamentos = Departamento.objects.all()
 
