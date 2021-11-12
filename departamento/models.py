@@ -70,4 +70,10 @@ class Transporte(models.Model):
         return str(self.patente)
 
 class Contacto(models.Model):
-    
+    nombre = models.CharField(max_length=50)
+    email = models.EmailField()
+    zona = models.ForeignKey(Zona, on_delete=models.PROTECT)
+    mensaje = models.TextField()
+
+    def __str__(self):
+        return str(self.nombre)

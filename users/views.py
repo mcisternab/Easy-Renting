@@ -7,7 +7,7 @@ from django.contrib.auth import logout as do_logout
 from django.http import HttpResponse, response
 from django.contrib import messages
 from django.views.generic.base import TemplateView
-from .forms import UCFWithEmail, AFWithEmail
+from .forms import UCFWithEmail, AFWithEmail, ContactoForm
 from django.core.paginator import Paginator
 from django.http import Http404
 from departamento.models import Departamento, Servicio, Zona , Transporte
@@ -100,6 +100,27 @@ def index(request):
 
 def cuenta(request):
     return render(request, "departamento/cuenta.html")
+
+def contacto(request):
+    zonas = Zona.objects.all()
+
+
+    data = {
+        'zonas': zonas,
+        'form':ContactoForm()
+    }
+
+    if request.method == "POST":
+        formulario = ContactoForm(data=request.POST)
+
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, 'Contacto Guardado')
+        else:
+            data["form"] = formulario
+
+
+    return render(request, "departamento/contacto.html", data)
 
 def dptos(request):
     busqueda = request.GET.get("buscar")

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from departamento.models import Contacto
 
 # Extendemos del original
 
@@ -23,3 +24,10 @@ class UCFWithEmail(UserCreationForm):
     class Meta:
         model = User
         fields = ["username","password1", "password2","first_name","last_name","email"]
+
+class ContactoForm(forms.ModelForm):
+
+    class Meta:
+        model = Contacto
+        fields = ["nombre","email","zona","mensaje"]
+
