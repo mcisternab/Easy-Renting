@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+  {% for m in messages %}
+    <script>
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: '{{m}}',
+        showConfirmButton: false,
+        timer: 2500,
+        backdrop: `
+        rgba(0,0,123,0.4)
+        url("https://c.tenor.com/uCoZ_h8QmV8AAAAj/angry-pikachu.gif")
+        center top
+        no-repeat
+      `,
+      })
+    </script>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}

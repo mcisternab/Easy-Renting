@@ -7,12 +7,11 @@ from django.contrib.auth import logout as do_logout
 from django.http import HttpResponse, response
 from django.contrib import messages
 from django.views.generic.base import TemplateView
-from .forms import UCFWithEmail, AFWithEmail, ContactoForm
+from .forms import UCFWithEmail, AFWithEmail, ContactoForm, ArriendoForm
 from django.core.paginator import Paginator
 from django.http import Http404
-from departamento.models import Departamento, Servicio, Zona , Transporte
+from departamento.models import Departamento, Servicio, Zona , Transporte, Arriendo
 from django.db.models import Q
-import datetime
 
 def welcome(request):
     # Si estamos identificados devolvemos la portada
@@ -20,7 +19,6 @@ def welcome(request):
         return render(request, "departamento/index.html")
     # En otro caso redireccionamos al login
     return redirect('/login')
-
 
 def register(request):
     # Creamos el formulario de autenticación vacío
@@ -54,7 +52,6 @@ def register(request):
     # Si llegamos al final renderizamos el formulario
     return render(request, "users/register.html", {'form': form})
 
-
 def login(request):
     # Creamos el formulario de autenticación vacío
     form = AuthenticationForm()
@@ -84,7 +81,6 @@ def login(request):
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "users/login.html", {'form': form})
-
 
 def logout(request):
     # Finalizamos la sesión
@@ -176,17 +172,30 @@ def listadoServicios(request):
     return render(request, "departamento/listadoServicios.html", data)
 
 def arrendar(request):
-    now = datetime.datetime.now()
     zonas = Zona.objects.all()
     departamentos = Departamento.objects.all()
 
     data = {
         'zonas': zonas,
         'departamentos': departamentos,
+        'form': ArriendoForm()
 
     }
 
+    if request.method == "POST":
+        formulario = ArriendoForm(data=request.POST)
+
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, 'Ahora se relizará el pago')
+            return redirect('/pago')
+        else:
+            data["form"] = formulario
+
     return render(request, "departamento/arrendar.html", data)
+
+def pago(request):
+    return render(request, "departamento/pago.html")
 
 def servicios(request):
     return render(request, "departamento/servicios.html")
@@ -205,7 +214,7 @@ def transporte(request):
         ).distinct()
 
     try:
-        paginator = Paginator(transportes, 4)
+        paginator = Paginator(transportes, 8)
         transportes = paginator.page(page)
     except:
         raise response.Http404

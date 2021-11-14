@@ -55,8 +55,8 @@ class Transporte(models.Model):
     rutConductor = models.CharField(max_length=50) 
     nombreConductor = models.CharField(max_length=50)
     tipoVehiculo = models.CharField(max_length=50)
-    contacto = models.IntegerField
-    capacidad = models.IntegerField
+    contacto = models.IntegerField()
+    capacidad = models.IntegerField()
     precio = models.IntegerField()
     horaInicio = models.CharField(max_length=50)
     horaCierre = models.CharField(max_length=50)
@@ -77,3 +77,19 @@ class Contacto(models.Model):
 
     def __str__(self):
         return str(self.nombre)
+
+class Arriendo(models.Model):
+    nombre_cliente = models.CharField(max_length=20)
+    apellido_cliente = models.CharField(max_length=20)
+    email_cliente = models.EmailField()
+    usuario_cliente = models.CharField(max_length=20)
+    departamento = models.ForeignKey(Departamento, on_delete=models.PROTECT)
+    zona = models.ForeignKey(Zona, on_delete=models.PROTECT)
+    cantidad_personas = models.IntegerField()
+    fecha_entrada = models.DateTimeField()
+    fecha_salida = models.DateTimeField()
+    precio = models.IntegerField()
+
+    def __str__(self):
+        return str(self.nombre_cliente)
+

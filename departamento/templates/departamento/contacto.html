@@ -20,27 +20,9 @@
                 <label for="id_zona">Zona:</label>
                 <select class="form-control" name="zona" required="" id="id_zona">
                 <option value="" selected="">---------</option>
-        
-                <option value="1">La Serena</option>
-        
-                <option value="2">Puerto Varas</option>
-        
-                <option value="3">Pucón</option>
-        
-                <option value="4">Viña Del Mar</option>
-        
-                <option value="5">Lican Ray</option>
-        
-                <option value="6">Villarrica</option>
-        
-                <option value="7">Valparaíso</option>
-        
-                <option value="8">Coquimbo</option>
-        
-                <option value="9">Chiloé</option>
-        
-                <option value="10">Puerto Montt</option>
-        
+                {% for z in zonas %}
+                <option value="{{ z.id }}">{{ z.nombre }}</option>
+                {% endfor %}
                 </select>
             </div>
             <div class="form-group">

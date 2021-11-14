@@ -15,46 +15,47 @@
       </div>
 
       <div class="row g-5">
-        <div class="col-md-5 col-lg-4 order-md-last">
-          <h3 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-primary">Datos pago <i class="fas fa-file-invoice-dollar"></i></span>
-            <span class="badge bg-primary rounded-pill">0</span>
-          </h3>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Departamento</h6>
-                <small class="text-muted">Breve descripción</small>
-              </div>
-              <span class="text-muted">$0</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Transporte</h6>
-                <small class="text-muted">Ida-vuelta</small>
-              </div>
-              <span class="text-muted">$0</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Servicios extra</h6>
-                <small class="text-muted">Breve descripción</small>
-              </div>
-              <span class="text-muted">$0</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">Código promoción</h6>
-                <small>ZPQHDNCYHY</small>
-              </div>
-              <span class="text-success">−$0</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total ($CLP)</span>
-              <strong>$0</strong>
-            </li>
-          </ul>
-  
+          <div class="col-md-5 col-lg-4 order-md-last">
+          <form method="POST" name="d">
+            <h3 class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-primary">Datos pago <i class="fas fa-file-invoice-dollar"></i></span>
+              <span class="badge bg-primary rounded-pill">0</span>
+            </h3>
+            <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">Departamento</h6>
+                  <small class="text-muted"><p id="dpto"></small>
+                </div>
+                <span class="text-muted">$0</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">Cantidad</h6>
+                  <small class="text-muted">Personas</small>
+                </div>
+                <span class="text-muted"><p id="demo"></p></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">Días</h6>
+                  <small class="text-muted">Estadía</small>
+                </div>
+                <span class="text-muted"><p id="dias"></p></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                  <h6 class="my-0">Código promoción</h6>
+                  <small>ZPQHDNCYHY</small>
+                </div>
+                <span class="text-success">−$0</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total ($CLP)</span>
+                <strong><p id="total"></p> </strong>
+              </li>
+            </ul>
+          </form>
           <form class="card p-2">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Código promoción">
@@ -63,88 +64,77 @@
           </form>
         </div>
         <div class="col-md-7 col-lg-8">
-          <h3 class="mb-3">Datos Cliente <i class="far fa-address-card"></i></h3>
-          <form class="needs-validation" novalidate>
+          <!--FORMULARIO ARRIENDO-->
+          <form class="needs-validation" novalidate method="POST" name="f">
+            {% csrf_token %}
             <div class="row g-3">
+              <h3 class="mb-3">Datos Cliente <i class="far fa-address-card"></i></h3>
               <div class="col-sm-6">
-                <label for="firstName" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="{{request.user.first_name}}" required>
+                <label for="id_nombre_cliente" class="form-label">Nombre cliente:</label>
+                <input type="text" class="form-control" placeholder="" name="nombre_cliente" maxlength="20" id="id_nombre_cliente" value="{{request.user.first_name}}" required>
                 <div class="invalid-feedback">
                   Nombre es requerido.
                 </div>
               </div>
-  
+
               <div class="col-sm-6">
-                <label for="lastName" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="{{request.user.last_name}}" required>
+                <label for="id_apellido_cliente" class="form-label">Apellido cliente:</label>
+                <input id="id_apellido_cliente" type="text" class="form-control" required="" name="apellido_cliente" maxlength="20" placeholder="" value="{{request.user.last_name}}">
                 <div class="invalid-feedback">
-                  Apellido es requerido.
+                  Por favor, ingresa cantidad de acompañantes.
                 </div>
               </div>
-  
+              
               <div class="col-12">
-                <label for="username" class="form-label">Usuario</label>
+                <label for="id_usuario_cliente" class="form-label">Usuario cliente:</label>
                 <div class="input-group has-validation">
                   <span class="input-group-text">@</span>
-                  <input type="text" class="form-control" id="username" placeholder="Username" value="{{request.user.username}}" readonly>
-                <div class="invalid-feedback">
+                  <input type="text" class="form-control" name="usuario_cliente" maxlength="20" required="" id="id_usuario_cliente" placeholder="Username" value="{{request.user.username}}" readonly>
+                  <div class="invalid-feedback">
                     Nombre Usuario Requerido.
                   </div>
                 </div>
               </div>
-  
+              
               <div class="col-12">
-                <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" placeholder="usuario@gmail.com" value="{{request.user.email}}" required>
+                <label for="id_email_cliente" class="form-label">Email cliente:</label>
+                <input type="email" class="form-control" name="email_cliente" maxlength="254" required="" id="id_email_cliente" placeholder="usuario@gmail.com" value="{{request.user.email}}">
                 <div class="invalid-feedback">
                   Por favor, ingresa un email válido.
                 </div>
               </div>
-  
-              <div class="col-12">
-                <label for="address" class="form-label">Dirección cliente</label>
-                <input type="text" class="form-control" id="address" placeholder="Calle, numeración, zona del país." required value="{{request.GET.now}}">
-                <div class="invalid-feedback">
-                  Por favor, introduzca su dirección.
-                </div>
-              </div>
 
               <h3 class="mb-3">Datos arriendo <i class="far fa-newspaper"></i></h3>
-  
-              <div class="col-12">
-                <label for="address2" class="form-label">Dirección destino <span class="text-muted">(Optional)</span></label>
-                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-              </div>
-  
+              
               <div class="col-md-5">
-                <label for="country" class="form-label">Zona</label>
-                <select class="form-select" id="country" required>
-                  <option value="">Elegir...</option>
+                <label for="id_zona" class="form-label">Zona:</label>
+                <select name="zona" class="form-select" required="" id="id_zona">
+                  <option value="" selected="">---------</option>
                   {% for z in zonas %}
-                    <option>{{ z.nombre }}</option>
+                  <option value="{{ z.id }}">{{ z.nombre }}</option>
                   {% endfor %}
                 </select>
                 <div class="invalid-feedback">
                   Por favor selecciona una zona.
                 </div>
               </div>
-  
+
               <div class="col-md-4">
-                <label for="state" class="form-label">Departamento</label>
-                <select class="form-select" id="state" required>
-                  <option value="">Elegir...</option>
+                <label for="id_departamento" class="form-label">Departamento:</label>
+                <select class="form-select" name="departamento" required="" id="id_departamento" onchange="cal()" onkeyup="cal()">
+                  <option value="" selected="">---------</option>
                   {% for d in departamentos %}
-                    <option>{{ d.nombre }}</option>
+                  <option value="{{ d.id }}">{{ d.nombre }}</option>
                   {% endfor %}
                 </select>
                 <div class="invalid-feedback">
                   Por favor, ingresa un departamento.
                 </div>
               </div>
-  
+
               <div class="col-md-3">
-                <label for="zip" class="form-label">Cantidad acompañantes</label>
-                <input type="number" class="form-control" id="zip" placeholder="" value="0" required>
+                <label for="id_cantidad_personas" class="form-label">Cantidad personas:</label>
+                <input type="number" class="form-control" name="cantidad_personas" placeholder="" min="1" required="" onchange="cal()" onkeyup="cal()" oninput="myFunction()" id="id_cantidad_personas">
                 <div class="invalid-feedback">
                   Por favor, ingresa cantidad de acompañantes.
                 </div>
@@ -154,33 +144,63 @@
               <h3>Fechas <i class="far fa-calendar"></i></h3>
               <div class="col-md-6">
                 <div class="form-control-wrapper">
-                  <input type="text" id="date-start" class="form-control floating-label" placeholder="Fecha y hora llegada">
+                  <input type="text" id="date-start" class="form-control floating-label" name="fecha_entrada" required="" id="id_fecha_entrada" placeholder="Fecha y hora llegada" onchange="cal()" onkeyup="cal()">
                 </div>
               </div>
+              
               <div class="col-md-6">
                 <div class="form-control-wrapper">
-                  <input type="text" id="date-end" class="form-control floating-label" placeholder="Fecha y hora retirada">
+                  <input type="text" class="form-control floating-label" placeholder="Fecha y hora retirada" id="date-end" name="fecha_salida" required="" onchange="cal()" onkeyup="cal()">
                 </div>
               </div>
-            <hr class="my-4">
-  
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="save-info">
-              <label class="form-check-label" for="save-info">Guardar esta información para la próxima vez</label>
+
+              <div class="col-md-3">
+                <label for="id_precio" class="form-label">Precio:</label>
+                <input type="number" class="form-control" name="precio" required="" id="id_precio" placeholder="" value="55000" required="" readonly>
+                <div class="invalid-feedback">
+                  Por favor, ingresa cantidad de acompañantes.
+                </div>
+              </div>
+
+              <hr class="my-4">
+
+              
+              <button class="w-100 btn btn-primary btn-lg" type="reset">Limpiar</button>          
+              <button class="w-100 btn btn-primary btn-lg" type="submit">Continuar con el pago <i class="fas fa-money-check-alt"></i></button>
             </div>
-  
-            <hr class="my-4">
-  
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Continuar con el pago <i class="fas fa-money-check-alt"></i></button>
           </form>
         </div>
       </div>
     </main>
-    <br><br><br><br><br><br>
+    <br><br>
 
     <!-- Script Datepicker -->
     
-		<script type="text/javascript">
+<script type="text/javascript">
+    function cal() {
+      try {
+        var a = parseInt(document.f.cantidad_personas.value),
+            b = parseInt(document.f.precio.value);
+            c = parseInt(document.f.fecha_entrada.value);
+            d = parseInt(document.f.fecha_salida.value);
+            d = parseInt(document.f.fecha_salida.value);
+            departamento = parseInt(document.f.departamento.value);
+            f = d - c;
+            document.getElementById("dias").innerHTML = f;
+            document.getElementById("total").innerHTML = "$" + (a * b * f);
+            document.getElementById("dpto").innerHTML = departamento;
+        document.d.sum.value = (a * b * f);
+        document.d.dias.value = f;
+        
+      } catch (e) {
+      }
+    }
+
+    function myFunction() {
+      var x = document.getElementById("id_cantidad_personas").value;
+      document.getElementById("demo").innerHTML = x;
+    }
+
 		$(document).ready(function()
 		{
 			$('#date').bootstrapMaterialDatePicker
@@ -226,7 +246,8 @@
 
 			$.material.init()
 		});
-		</script>
+
+</script>
     
     <script src="{% static '/js/form-validation.js' %}"></script>
 {% endblock %}
