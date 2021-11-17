@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.fields import BooleanField, IntegerField
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Zona(models.Model):
@@ -92,4 +93,25 @@ class Arriendo(models.Model):
 
     def __str__(self):
         return str(self.nombre_cliente)
+
+class ActaIn(models.Model):
+    first_name = models.ForeignKey(User, on_delete=models.PROTECT)
+    departamento = models.ForeignKey(Departamento, on_delete=models.PROTECT)
+    tipo =  models.ForeignKey(Tiposervicio, on_delete=models.PROTECT)
+    pago = models.BooleanField()
+    entrega = models.BooleanField()
+    transporte = models.BooleanField()
+    descripcion = models.TextField()
+
+class ActaOut(models.Model):
+    conforme = models.BooleanField()
+    multa = models.BooleanField()
+    transporte = models.BooleanField()
+    condiciones = models.CharField(max_length=50)
+    problemas = models.CharField(max_length=50)
+    first_name = models.ForeignKey(User, on_delete=models.PROTECT)
+    departamento = models.ForeignKey(Departamento, on_delete=models.PROTECT)
+    tipo =  models.ForeignKey(Tiposervicio, on_delete=models.PROTECT)
+
+
 

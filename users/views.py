@@ -159,7 +159,7 @@ def listadoServicios(request):
         ).distinct()
 
     try:
-        paginator = Paginator(servicios, 4)
+        paginator = Paginator(servicios, 3)
         servicios = paginator.page(page)
     except:
         raise response.Http404
@@ -214,7 +214,7 @@ def transporte(request):
         ).distinct()
 
     try:
-        paginator = Paginator(transportes, 8)
+        paginator = Paginator(transportes, 4)
         transportes = paginator.page(page)
     except:
         raise response.Http404

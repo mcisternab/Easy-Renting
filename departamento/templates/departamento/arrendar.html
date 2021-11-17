@@ -25,7 +25,7 @@
               <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
                   <h6 class="my-0">Departamento</h6>
-                  <small class="text-muted"><p id="dpto"></small>
+                  <small class="text-muted"><p class="pt-2 pb-0" id="dpto"></p></small>
                 </div>
                 <span class="text-muted">$0</span>
               </li>
@@ -122,7 +122,7 @@
               <div class="col-md-4">
                 <label for="id_departamento" class="form-label">Departamento:</label>
                 <select class="form-select" name="departamento" required="" id="id_departamento" onchange="cal()" onkeyup="cal()">
-                  <option value="" selected="">---------</option>
+                  <option value="3" selected="">---------</option>
                   {% for d in departamentos %}
                   <option value="{{ d.id }}">{{ d.nombre }}</option>
                   {% endfor %}
@@ -134,7 +134,7 @@
 
               <div class="col-md-3">
                 <label for="id_cantidad_personas" class="form-label">Cantidad personas:</label>
-                <input type="number" class="form-control" name="cantidad_personas" placeholder="" min="1" required="" onchange="cal()" onkeyup="cal()" oninput="myFunction()" id="id_cantidad_personas">
+                <input type="number" class="form-control" name="cantidad_personas" placeholder="" min="1" max="10" required="" onchange="cal()" onkeyup="cal()" oninput="myFunction()" id="id_cantidad_personas">
                 <div class="invalid-feedback">
                   Por favor, ingresa cantidad de acompañantes.
                 </div>
@@ -183,17 +183,24 @@
             b = parseInt(document.f.precio.value);
             c = parseInt(document.f.fecha_entrada.value);
             d = parseInt(document.f.fecha_salida.value);
-            d = parseInt(document.f.fecha_salida.value);
-            departamento = parseInt(document.f.departamento.value);
+            departamento = document.getElementById("id_departamento");
+            select_departamento = departamento.options[departamento.selectedIndex].text;
+            zona = document.getElementById("id_zona");
+            select_zona = zona.options[zona.selectedIndex].text;
+            document.getElementById("dpto").innerHTML = select_departamento + " - " + select_zona;
             f = d - c;
-            document.getElementById("dias").innerHTML = f;
-            document.getElementById("total").innerHTML = "$" + (a * b * f);
-            document.getElementById("dpto").innerHTML = departamento;
+            if(isNaN(f)){
+                    return 0;
+                }
+        document.getElementById("dias").innerHTML = f;
+        document.getElementById("total").innerHTML = "$" + (a * b * f)/2;
+        
         document.d.sum.value = (a * b * f);
         document.d.dias.value = f;
         
       } catch (e) {
       }
+      
     }
 
     function myFunction() {

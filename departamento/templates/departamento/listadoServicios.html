@@ -21,7 +21,7 @@
         <!--Buscador-->
         <form action="" method="GET">
             <div class="input-group rounded col-lg-6" style="padding-bottom: 20px;">
-            <input type="search" class="form-control rounded" placeholder="Buscar servicio por: Tipo de servicio, zona del país o departamento al cual corresponda." name="buscarServicio" aria-label="Search"
+            <input type="search" class="form-control rounded" placeholder="Buscar servicio por: tipo de servicio, zona del país o departamento al cual corresponda." name="buscarServicio" aria-label="Search"
             aria-describedby="search-addon" value="{{ request.GET.buscarServicio }}" />
             <button type="submit" class="btn btn-dark">
                 <i class="fas fa-search"></i>
@@ -69,10 +69,6 @@
           {% endfor %}
         </div>
       </div>
-    </div>
-
-    <div>
-      {% include 'departamento/paginator.html' %}
     </div>
   
 </main>
