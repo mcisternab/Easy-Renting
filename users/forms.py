@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from departamento.models import Contacto, Arriendo
+from departamento.models import Contacto, Arriendo, Pasajero
 
 # Extendemos del original
 
@@ -37,3 +37,8 @@ class ArriendoForm(forms.ModelForm):
         model = Arriendo
         fields = ["nombre_cliente","apellido_cliente","email_cliente","usuario_cliente","departamento","zona","cantidad_personas","fecha_entrada","fecha_salida","precio"]
 
+class PasajeroForm(forms.ModelForm):
+
+    class Meta:
+        model = Pasajero
+        fields = ["nombre_cliente","rut_pasajero","nombre_pasajero","apellido_paterno","apellido_materno"]

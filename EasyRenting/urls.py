@@ -37,6 +37,7 @@ urlpatterns = [
     path('contacto', login_required(views.contacto)),
     path('dptos', login_required(views.dptos)),
     path('arrendar', login_required(views.arrendar)),
+    path('acompañante', login_required(views.pasajero.as_view())),
     path('pago', login_required(views.pago)),
     path('servicios', login_required(views.servicios)),
     path('listadoServicios', login_required(views.listadoServicios)),

@@ -94,6 +94,16 @@ class Arriendo(models.Model):
     def __str__(self):
         return str(self.nombre_cliente)
 
+class Pasajero(models.Model):
+    nombre_cliente = models.ForeignKey(Arriendo, on_delete=models.PROTECT)
+    rut_pasajero = models.CharField(max_length=20)
+    nombre_pasajero = models.CharField(max_length=20)
+    apellido_paterno = models.CharField(max_length=20)
+    apellido_materno = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.rut_pasajero)
+
 class ActaIn(models.Model):
     first_name = models.ForeignKey(User, on_delete=models.PROTECT)
     departamento = models.ForeignKey(Departamento, on_delete=models.PROTECT)

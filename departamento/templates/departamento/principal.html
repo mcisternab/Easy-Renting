@@ -190,18 +190,9 @@
           <div class="p-4">
             <h5 class="fst-italic">Departamentos</h5>
             <ol class="list-unstyled mb-0">
-              <li><a href="#">Puerto Varas</a></li>
-              <li><a href="#">La Serena</a></li>
-              <li><a href="#">Viña Del Mar</a></li>
-              <li><a href="#">Coquimbo</a></li>
-              <li><a href="#">Villarrica</a></li>
-              <li><a href="#">Pucón</a></li>
-              <li><a href="#">Valparaíso</a></li>
-              <li><a href="#">Lican Ray</a></li>
-              <li><a href="#">Atacama</a></li>
-              <li><a href="#">Antofagasta</a></li>
-              <li><a href="#">Chiloé</a></li>
-              <li><a href="#">Isla De Pascua</a></li>
+              {% for d in departamentos %}
+              <li><a href="#">{{ d.nombre }}</a></li>
+              {% endfor %}
             </ol>
           </div>
   

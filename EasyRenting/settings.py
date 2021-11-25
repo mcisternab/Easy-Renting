@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -153,9 +154,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'jor.paredes1925@gmail.com'
-EMAIL_HOST_PASSWORD = 'soto1973'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'easyrenting2021@gmail.com'
+EMAIL_HOST_PASSWORD = 'Easy1324.'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 

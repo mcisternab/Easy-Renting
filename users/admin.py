@@ -1,5 +1,5 @@
 from django.contrib import admin
-from departamento.models import Zona, Departamento, Tiposervicio , Servicio , Transporte, Contacto, Arriendo
+from departamento.models import Zona, Departamento, Tiposervicio , Servicio , Transporte, Contacto, Arriendo, Pasajero
 # Register your models here.
 
 
@@ -10,3 +10,4 @@ admin.site.register(Servicio)
 admin.site.register(Transporte)
 admin.site.register(Contacto)
 admin.site.register(Arriendo)
+admin.site.register(Pasajero)

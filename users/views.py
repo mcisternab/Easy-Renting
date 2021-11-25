@@ -7,11 +7,13 @@ from django.contrib.auth import logout as do_logout
 from django.http import HttpResponse, response
 from django.contrib import messages
 from django.views.generic.base import TemplateView
-from .forms import UCFWithEmail, AFWithEmail, ContactoForm, ArriendoForm
+from .forms import UCFWithEmail, AFWithEmail, ContactoForm, ArriendoForm, PasajeroForm
 from django.core.paginator import Paginator
 from django.http import Http404
-from departamento.models import Departamento, Servicio, Zona , Transporte, Arriendo
+from departamento.models import Departamento, Servicio, Zona , Transporte, Arriendo, Pasajero
 from django.db.models import Q
+from django.forms import formset_factory
+from django.views.generic.edit import FormView
 
 def welcome(request):
     # Si estamos identificados devolvemos la portada
@@ -89,7 +91,14 @@ def logout(request):
     return redirect('/')
 
 def principal(request):
-    return render(request, "departamento/principal.html")
+    departamentos = Departamento.objects.all()
+
+    data = {
+        'departamentos': departamentos
+
+    }
+
+    return render(request, "departamento/principal.html", data)
 
 def index(request):
     return render(request, "departamento/index.html")
@@ -159,7 +168,7 @@ def listadoServicios(request):
         ).distinct()
 
     try:
-        paginator = Paginator(servicios, 3)
+        paginator = Paginator(servicios, 9)
         servicios = paginator.page(page)
     except:
         raise response.Http404
@@ -188,11 +197,30 @@ def arrendar(request):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, 'Ahora se relizará el pago')
-            return redirect('/pago')
+            return redirect('/acompañante')
         else:
             data["form"] = formulario
 
     return render(request, "departamento/arrendar.html", data)
+
+class pasajero(FormView):
+    pasajero = Pasajero.objects.all()
+    template_name = 'departamento/acompañantes.html'
+    form_class = formset_factory(PasajeroForm, extra=2)
+
+    data = {
+        'pasajero': pasajero
+    }
+
+    def form_valid(self, form):
+        
+
+        for f in form:
+            f.save()
+        
+        return redirect('/pago')
+
+        return super(pasajero, self).form_valid(form)
 
 def pago(request):
     return render(request, "departamento/pago.html")
@@ -214,7 +242,7 @@ def transporte(request):
         ).distinct()
 
     try:
-        paginator = Paginator(transportes, 4)
+        paginator = Paginator(transportes, 9)
         transportes = paginator.page(page)
     except:
         raise response.Http404
