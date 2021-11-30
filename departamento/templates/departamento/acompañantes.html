@@ -3,6 +3,8 @@
 {% load static %}
 
 {% block content %}
+
+{% load crispy_forms_tags %}
 <style>
 
     #timeline-wrap{
@@ -49,15 +51,15 @@
     
     
     .timeline-icon.one {
-        background-color: #3e4f88 !important;
+        background-color: #3386FF !important;
     }
     
     .timeline-icon.two {
-        background-color: #536295 !important;
+        background-color: #33D4FF !important;
     }
     
     .timeline-icon.three{
-        background-color: #6976a2 !important;
+        background-color: #3386FF !important;
     }
     
     .mfirst{
@@ -105,18 +107,36 @@
         </div>
        
     </div>
-    
-        <div class="modal-content rounded-5 shadow">
-            <div class="modal-header p-5 pb-4 border-bottom-0">
-                  <form method="POST">
-                    {% csrf_token %}                    
-                    {{ form.management_form }}
-                    {{ form }}
-                    <br> 
-                    <button class="btn btn-primary" type="submit">siguiente</button>
-                  </form>
-            </div>
-        </div>
+<form method="POST">
+  {% csrf_token %}                    
+  {{ form.management_form }}
+  {% for f in form %}     
+  
+  <div class="row">
+    <div class="col-lg-12">
+      <h5>Datos Acompañantes:</h5>        
+      {{ f | crispy }}
+      <br>
+    </div>
+  </div>
+  {% endfor %}
+  <button class="btn btn-primary" type="submit">siguiente</button>
+</form>
 
+{% if messages %}
+  {% for m in messages %}
+    <script>
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '{{m}}',
+        width: 600,
+        padding: '3em',
+        showConfirmButton: false,
+        timer: 3500
+      })
+    </script>
+  {% endfor %}
+{% endif %}
 
 {% endblock %}

@@ -16,18 +16,56 @@
     </div> 
   </section>
 
-    <div class="album py-5 bg-light">
-      <div class="container">
+  <div class="album py-5 bg-light">
+    <div class="container">
         <!--Buscador-->
         <form action="" method="GET">
-            <div class="input-group rounded col-lg-6" style="padding-bottom: 20px;">
-            <input type="search" class="form-control rounded" placeholder="Buscar servicio por: tipo de servicio, zona del país o departamento al cual corresponda." name="buscarServicio" aria-label="Search"
-            aria-describedby="search-addon" value="{{ request.GET.buscarServicio }}" />
-            <button type="submit" class="btn btn-dark">
-                <i class="fas fa-search"></i>
-            </button>
-            </div>
+          <div class="input-group rounded pb-3 px-1" style="padding-bottom: 20px;">
+              <div class="col-sm-3 px-2">
+                <label class="form-label" for="id_tipo">Tipo de servicio:</label>
+                <select class="form-select" name="tipo" id="id_tipo">
+                  <option disabled selected>Selecciona el tipo de servicio</option>
+                  {% for t in tiposervicio %}
+                  <option value="{{t.id}}">{{t.tipo}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-sm-2 px-2">
+                <label class="form-label" for="id_zona">Zona:</label>
+                <select class="form-select"  name="zona" id="id_zona">
+                  <option disabled selected>Selecciona zona</option>
+                  {% for z in zonas %}
+                    <option value="{{z.id}}">{{z.nombre}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-sm-3 px-2">
+                <label class="form-label" for="id_departamento">Departamento:</label>
+                <select class="form-select" name="departamento" id="id_departamento">
+                  <option disabled selected>Selecciona departamento</option>
+                  {% for d in departamentos %}
+                  <option value="{{d.id}}">{{d.nombre}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-sm-2 px-2">
+                <label class="form-label" for="id_precio">Precio:</label>
+                <input class="form-control" type="number" name="precio" step="any" min="0" id="id_precio" placeholder="Valor servicio">
+              </div>
+
+              
+              <div class="col-sm-2 py-2 px-4">
+                <br>
+                <button type="submit" class="btn btn-dark">
+                 Buscar <i class="fas fa-search"></i>
+                </button>
+              </div>
+          </div>
         </form>
+        
         {% load humanize %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {% for s in entity %} 
@@ -70,7 +108,6 @@
         </div>
       </div>
     </div>
-  
 </main>
 
 <!--Paginador-->

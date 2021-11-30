@@ -4,6 +4,8 @@
 
 {% block content %}
 
+{% load humanize %}
+
 <style>
 
 #timeline-wrap{
@@ -50,15 +52,15 @@ transition: all 300ms ease;
 
 
 .timeline-icon.one {
-    background-color: #03abd4 !important;
+    background-color: #33D4FF !important;
 }
 
 .timeline-icon.two {
-    background-color: #536295 !important;
+    background-color: #3386FF !important;
 }
 
 .timeline-icon.three{
-    background-color: #6976a2 !important;
+    background-color: #3386FF !important;
 }
 
 .mfirst{
@@ -81,7 +83,7 @@ transition: all 300ms ease;
     <main>
 
       <div class="py-5 text-center">
-        <i class="far fa-handshake fa-3x" style="color: chartreuse;"></i>
+        <img src="https://st3.depositphotos.com/4060975/17876/v/450/depositphotos_178762002-stock-illustration-payment-flat-vector-icon.jpg" alt="pago" width="150">
         <h2>Pago Easy Renting</h2>
         <p class="lead">Realise el pago de su arriendo, transporte o servicio extra que contrató. 
           Recuerde que del total de su pago, debes pagar el 50% de manera anticipada y el otro 50% 
@@ -99,7 +101,7 @@ transition: all 300ms ease;
       
         <!-- This is the individual marker-->
         <div class="marker m2 timeline-icon two">
-          <a href="/acompañante" style="color: white;"><i class="fas fa-user-plus"></i></a>
+          <i class="fas fa-user-plus"></i>
         </div>
         
         <!-- This is the individual marker-->
@@ -112,17 +114,17 @@ transition: all 300ms ease;
       <div class="row g-5">
           <div class="col-md-5 col-lg-4 order-md-last">
           <form method="POST" name="d">
-            <h3 class="d-flex justify-content-between align-items-center mb-3">
-              <span class="text-primary">Datos pago <i class="fas fa-file-invoice-dollar"></i></span>
-              <span class="badge bg-primary rounded-pill">0</span>
+            <h3 class="d-flex justify-content-between align-items-center mb-3" >
+              <span>Datos pago</span>
+              <span  style="color: #77E526;" class="px-2"><i class="fas fa-file-invoice-dollar"></i></span>
             </h3>
             <ul class="list-group mb-3">
               <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
                   <h6 class="my-0">Departamento</h6>
-                  <small class="text-muted"><p class="pt-2 pb-0" id="dpto"></p></small>
+                  <small class="text-muted"><p class="pt-2 pb-0">{{ departamentos.zona }} - {{departamentos}}</p></small>
                 </div>
-                <span class="text-muted">$0</span>
+                <span class="text-muted">${{ departamentos.precio | intcomma }}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
@@ -203,12 +205,7 @@ transition: all 300ms ease;
               
               <div class="col-md-5">
                 <label for="id_zona" class="form-label">Zona:</label>
-                <select name="zona" class="form-select" required="" id="id_zona">
-                  <option value="" selected="">---------</option>
-                  {% for z in zonas %}
-                  <option value="{{ z.id }}">{{ z.nombre }}</option>
-                  {% endfor %}
-                </select>
+                <input type="text" class="form-control" value="{{ departamentos.zona }}" name="zona" maxlength="20" required="" id="id_zona" readonly>
                 <div class="invalid-feedback">
                   Por favor selecciona una zona.
                 </div>
@@ -216,12 +213,7 @@ transition: all 300ms ease;
 
               <div class="col-md-4">
                 <label for="id_departamento" class="form-label">Departamento:</label>
-                <select class="form-select" name="departamento" required="" id="id_departamento" onchange="cal()" onkeyup="cal()">
-                  <option value="3" selected="">---------</option>
-                  {% for d in departamentos %}
-                  <option value="{{ d.id }}">{{ d.nombre }}</option>
-                  {% endfor %}
-                </select>
+                <input class="form-control" value="{{ departamentos }}" type="text" name="departamento" maxlength="20" required="" id="id_departamento" onchange="cal()" onkeyup="cal()" readonly>
                 <div class="invalid-feedback">
                   Por favor, ingresa un departamento.
                 </div>
@@ -235,6 +227,27 @@ transition: all 300ms ease;
                 </div>
               </div>
 
+              <div class="col-md-6">
+                <label for="id_precio" class="form-label">Precio:</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" name="precio_inicial" placeholder="" value="{{ departamentos.precio }}" readonly>
+                  <div class="invalid-feedback">
+                    Por favor, ingresa cantidad de acompañantes.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_precio" class="form-label">Precio Final:</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" name="precio" required="" id="id_precio"  placeholder="" readonly>
+                  <div class="invalid-feedback">
+                    Por favor, ingresa cantidad de acompañantes.
+                  </div>
+                </div>
+              </div>
               <!-- Datepicker -->
               <h3>Fechas <i class="far fa-calendar"></i></h3>
               <div class="col-md-6">
@@ -249,13 +262,7 @@ transition: all 300ms ease;
                 </div>
               </div>
 
-              <div class="col-md-3">
-                <label for="id_precio" class="form-label">Precio:</label>
-                <input type="number" class="form-control" name="precio" required="" id="id_precio" placeholder="" value="55000" required="" readonly>
-                <div class="invalid-feedback">
-                  Por favor, ingresa cantidad de acompañantes.
-                </div>
-              </div>
+              
 
               <hr class="my-4">
 
@@ -275,24 +282,17 @@ transition: all 300ms ease;
     function cal() {
       try {
         var a = parseInt(document.f.cantidad_personas.value),
-            b = parseInt(document.f.precio.value);
-            c = parseInt(document.f.fecha_entrada.value);
-            d = parseInt(document.f.fecha_salida.value);
-            departamento = document.getElementById("id_departamento");
-            select_departamento = departamento.options[departamento.selectedIndex].text;
-            zona = document.getElementById("id_zona");
-            select_zona = zona.options[zona.selectedIndex].text;
-            document.getElementById("dpto").innerHTML = select_departamento + " - " + select_zona;
+            b = parseInt(document.f.precio_inicial.value);
+            c = date(document.f.fecha_entrada.value);
+            d = date(document.f.fecha_salida.value);
             f = d - c;
             if(isNaN(f)){
                     return 0;
                 }
         document.getElementById("dias").innerHTML = f;
         document.getElementById("total").innerHTML = "$" + (a * b * f)/2;
-        
-        document.d.sum.value = (a * b * f);
-        document.d.dias.value = f;
-        
+        document.getElementById("id_precio").value = (a * b * f)/2;
+
       } catch (e) {
       }
       

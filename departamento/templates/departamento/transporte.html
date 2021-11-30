@@ -6,16 +6,6 @@
 
 <main role="main">
 
-<section class="jumbotron text-center">
-  <div class="container">
-  <br><br>
-  <h1>Transportes en nuestras diferentes zonas del país</h1>
-  <p class="lead text-muted">Busca el mejor servicio de transporte acorde a tus necesidades. 
-    Si arriendas un departamento, puedes contratar un servicio de transporte que te lleve desde un punto X 
-    (dentro de la zona correspondiente al departamento) hasta tu zona de arriendo, y viceversa.</p>
-  </div>
-</section>
-
 <style>
   #motionPath {
     overflow: visible;
@@ -43,8 +33,17 @@
   }
 </style>
 
+<br><br>
 <div class="row justify-content-center">
-  <div class="col-md-7">
+  <div class="col-md-5">
+    <section class="jumbotron text-center">
+      <div class="container">
+      <br><br>
+      <h2>Transportes ida-vuelta a lo largo del país <button class="btn" type="button" style="color: blue;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><i class="fas fa-info-circle fa-2x" title="Información"></i></button></h2> 
+      </div>
+    </section>
+  </div>
+  <div class="col-md-5">
     <svg id="motionPath" viewBox="-20 0 557 190">
       <path id="path" fill="none" d="M8,102 C15,83 58,25 131,24 206,24 233,63 259,91 292,125 328,155 377,155 464,155 497,97 504,74"/> 
     </svg>
@@ -53,19 +52,70 @@
 </div>
 
 {% load humanize %}
-<div class="album py-5 bg-light">
+
+<div class="album py-2 bg-light">
   <div class="container"> 
+    <hr>
     <!--Buscador-->
     <form action="" method="GET">
-        <div class="input-group rounded col-lg-6" style="padding-bottom: 20px;">
-        <input type="search" class="form-control rounded" placeholder="Buscar transporte por: Zona del país, departamento al cual corresponda o nombre del conductor." name="buscarTransporte" aria-label="Search"
-        aria-describedby="search-addon" value="{{ request.GET.buscarTransporte }}" />
-        <button type="submit" class="btn btn-dark">
-            <i class="fas fa-search"></i>
-        </button>
+        <div class="input-group rounded px-1" style="padding-bottom: 5px;">
+          <div class="col-sm-2 px-2">
+            <label class="form-label" for="id_zona">Zona:</label>
+            <select class="form-select"  name="zona" id="id_zona">
+              <option disabled selected>Selecciona zona</option>
+              {% for z in zonas %}
+                <option value="{{z.id}}">{{z.nombre}}</option>
+              {% endfor %}
+            </select>
+          </div>
+  
+          <div class="col-sm-3 px-2">
+            <label class="form-label" for="id_departamento">Departamento:</label>
+            <select class="form-select" name="departamento" id="id_departamento">
+              <option disabled selected>Selecciona departamento</option>
+            
+              {% for d in departamentos %}
+                <option value="{{d.id}}">{{d.nombre}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-sm-3 px-2">
+            <label class="form-label" for="id_capacidad">Capacidad:</label>
+            <input class="form-control" type="number" name="capacidad" step="any" id="id_capacidad" placeholder="Capacidad vehículo">
+          </div>
+
+          <div class="col-sm-2 px-2">
+            <label class="form-label" for="id_precio">Precio:</label>
+            <input class="form-control" type="number" name="precio" step="any" id="id_precio" placeholder="Valor transporte">  
+          </div>
+         
+          <div class="col-sm-2 py-2"  style="padding-left: 60px;">
+            <br>
+            <button type="submit" class="btn btn-dark">
+                Buscar <i class="fas fa-search"></i>
+            </button>
+          </div>
         </div>
     </form>
+
+
+    <!--Información Transporte-->
+
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasTopLabel">Datos Transportes</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p class="lead text-muted">Busca el mejor servicio de transporte acorde a tus necesidades. 
+          Si arriendas un departamento, puedes contratar un servicio de transporte que te lleve desde un punto X 
+          (dentro de la zona correspondiente al departamento) hasta tu zona de arriendo, y viceversa.</p>
+      </div>
+    </div>
+
     <div class="row">
+        <hr>
         <!--Departamentos-->
         {% for t in entity %}
         <div class="col-md-4">
@@ -82,7 +132,7 @@
                 <div class="d-flex justify-content-between align-items-center" style="font-size: 14px;">
                     <i class="fas fa-dollar-sign"> Precio: {{t.precio | intcomma }} CLP</i>
                     <div class="btn-group">
-                    <a href="/arrendar"><button type="button" class="btn btn-outline-primary" style="padding: 3px;" >Agregar <i class="fas fa-cart-plus"></i></button></a>
+                    <a href="/arrendar"><button type="button" class="btn btn-outline-primary" style="padding: 5px;" >Contratar <i class="fas fa-plus-circle"></i></button></a>
                     </div>
                 </div> 
                 </div>

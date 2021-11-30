@@ -10,10 +10,11 @@ from django.views.generic.base import TemplateView
 from .forms import UCFWithEmail, AFWithEmail, ContactoForm, ArriendoForm, PasajeroForm
 from django.core.paginator import Paginator
 from django.http import Http404
-from departamento.models import Departamento, Servicio, Zona , Transporte, Arriendo, Pasajero
+from departamento.models import Departamento, Servicio, Zona , Transporte, Arriendo, Pasajero, Tiposervicio
 from django.db.models import Q
 from django.forms import formset_factory
 from django.views.generic.edit import FormView
+from departamento.filters import ServicioFilter, TransporteFilter
 
 def welcome(request):
     # Si estamos identificados devolvemos la portada
@@ -130,7 +131,6 @@ def contacto(request):
 def dptos(request):
     busqueda = request.GET.get("buscar")
     departamentos = Departamento.objects.all()
-
     page = request.GET.get('page', 1)
 
     if busqueda:
@@ -147,7 +147,7 @@ def dptos(request):
 
     data = {
         'entity': departamentos,
-        'paginator': paginator
+        'paginator': paginator,
 
     }
 
@@ -156,6 +156,12 @@ def dptos(request):
 def listadoServicios(request):
     busqueda = request.GET.get("buscarServicio")
     servicios = Servicio.objects.all()
+    tiposervicio = Tiposervicio.objects.all()
+    zonas = Zona.objects.all()
+    departamentos = Departamento.objects.all()
+    miFiltro = ServicioFilter(request.GET, queryset=servicios)
+    servicios = miFiltro.qs
+
 
     page = request.GET.get('page', 1)
 
@@ -175,18 +181,24 @@ def listadoServicios(request):
 
     data = {
         'entity': servicios,
-        'paginator': paginator
+        'paginator': paginator,
+        'tiposervicio':tiposervicio,
+        'zonas':zonas,
+        'departamentos':departamentos,
+        'miFiltro': miFiltro,
     }
 
     return render(request, "departamento/listadoServicios.html", data)
 
-def arrendar(request):
+def arrendar(request, pk):
     zonas = Zona.objects.all()
-    departamentos = Departamento.objects.all()
+    departamentos = Departamento.objects.get(id=pk)
+    dptos = Departamento.objects.all()
 
     data = {
         'zonas': zonas,
         'departamentos': departamentos,
+        'dptos': dptos,
         'form': ArriendoForm()
 
     }
@@ -196,7 +208,7 @@ def arrendar(request):
 
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, 'Ahora se relizará el pago')
+            messages.success(request, 'Ahora por favor, ingrese los siguientes datos')
             return redirect('/acompañante')
         else:
             data["form"] = formulario
@@ -204,19 +216,14 @@ def arrendar(request):
     return render(request, "departamento/arrendar.html", data)
 
 class pasajero(FormView):
-    pasajero = Pasajero.objects.all()
     template_name = 'departamento/acompañantes.html'
-    form_class = formset_factory(PasajeroForm, extra=2)
-
-    data = {
-        'pasajero': pasajero
-    }
-
+    form_class = formset_factory(PasajeroForm, extra=1)
+    
     def form_valid(self, form):
-        
 
         for f in form:
             f.save()
+            messages.success(request, 'Será redirigido al pago del arriendo')
         
         return redirect('/pago')
 
@@ -226,11 +233,17 @@ def pago(request):
     return render(request, "departamento/pago.html")
 
 def servicios(request):
+
     return render(request, "departamento/servicios.html")
 
 def transporte(request):
     busqueda = request.GET.get("buscarTransporte")
     transportes = Transporte.objects.all()
+    zonas = Zona.objects.all()
+    departamentos = Departamento.objects.all()
+
+    miFiltro = TransporteFilter(request.GET, queryset=transportes)
+    transportes = miFiltro.qs
 
     page = request.GET.get('page', 1)
 
@@ -249,6 +262,9 @@ def transporte(request):
 
     data = {
         'entity': transportes,
+        'zonas':zonas,
+        'departamentos':departamentos,
+        'miFiltro':miFiltro,
         'paginator': paginator
     }
     

@@ -9,7 +9,8 @@
     <section class="jumbotron text-center">
       <div class="container">
         <br><br>
-        <h1>Departamentos a lo largo de todo Chile</h1>
+        <h1>Departamentos a lo largo de todo Chile <button class="btn" type="button" style="color: blue;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><i class="fas fa-info-circle fa-2x" title="Información"></i></button>
+        </h1>
         <p class="lead text-muted">En <strong>Easy Renting</strong> encontrarás los mejores departamentos
            a lo largo de nuestro país al mejor precio. Tambien, obtendrás los mejores servicios turisticos,
            de transporte y excepcionales banquetes que la empresa proporciona. Y además, en cuanto llegues 
@@ -22,7 +23,7 @@
         
 <!--Buscador-->
 <div class="row">
-  <div class="col-lg-11">
+  <div class="col-lg-12  pb-3">
     <form action="" method="GET">
       <div class="input-group rounded col-lg-6" style="padding-bottom: 20px;">
         <input type="search" class="form-control rounded" placeholder="Buscar departamento por: nombre o zona del país." name="buscar" aria-label="Search"
@@ -33,10 +34,8 @@
       </div>
     </form>
   </div>
-<!--Información precio departamentos-->
-  <div class="col-lg-1">
-    <button class="btn" type="button" style="color: blue;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><i class="fas fa-info-circle fa-2x" title="Información"></i></button>
-  </div>
+
+   <!--Información precio departamentos-->
 
   <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
     <div class="offcanvas-header">
@@ -142,7 +141,7 @@
                       <small class="text-muted">{{ d.zona }}</small>
                       <i class="fas fa-dollar-sign"> Precio: {{d.precio | intcomma }} CLP</i>
                       <div class="btn-group">
-                        <a href="/arrendar"><button type="button" class="btn btn-outline-dark">Arrendar <i class="far fa-calendar-check"></i></button></a>
+                        <a href="{% url 'arrendar' d.id %}"><button type="button" class="btn btn-outline-dark">Arrendar <i class="far fa-calendar-check"></i></button></a>
                       </div>
                     </div> 
                   </div>
