@@ -98,7 +98,7 @@
                             <small class="text-muted">{{ s.zona }}</small>
                             <i class="fas fa-dollar-sign"> Precio: {{s.precio | intcomma }} CLP</i>
                             <div class="btn-group">
-                              <a href="#"><button type="button" class="btn btn-outline-dark">Agregar <i class="fas fa-plus"></i></button></a>
+                              <a href="{% url 'contratoServicio' s.id %}"><button type="button" class="btn btn-outline-dark">Agregar <i class="fas fa-plus"></i></button></a>
                             </div>
                         </div>
                     </div>

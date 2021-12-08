@@ -1,5 +1,9 @@
 from django.core import paginator
 from django.shortcuts import render, redirect
+from io import BytesIO
+from django.template.loader import get_template
+from django.views import View
+from xhtml2pdf import pisa
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login as do_login
@@ -7,10 +11,10 @@ from django.contrib.auth import logout as do_logout
 from django.http import HttpResponse, response
 from django.contrib import messages
 from django.views.generic.base import TemplateView
-from .forms import UCFWithEmail, AFWithEmail, ContactoForm, ArriendoForm, PasajeroForm
+from .forms import UCFWithEmail, AFWithEmail, ContactoForm, ArriendoForm, PasajeroForm, PagoForm
 from django.core.paginator import Paginator
 from django.http import Http404
-from departamento.models import Departamento, Servicio, Zona , Transporte, Arriendo, Pasajero, Tiposervicio
+from departamento.models import Departamento, Servicio, Zona , Transporte, Arriendo,  Tiposervicio, Pasajero
 from django.db.models import Q
 from django.forms import formset_factory
 from django.views.generic.edit import FormView
@@ -209,28 +213,34 @@ def arrendar(request, pk):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, 'Ahora por favor, ingrese los siguientes datos')
-            return redirect('/acompañante')
+            return redirect('/pasajero')
         else:
             data["form"] = formulario
 
     return render(request, "departamento/arrendar.html", data)
 
-class pasajero(FormView):
-    template_name = 'departamento/acompañantes.html'
-    form_class = formset_factory(PasajeroForm, extra=1)
-    
-    def form_valid(self, form):
-
-        for f in form:
-            f.save()
-            messages.success(request, 'Será redirigido al pago del arriendo')
-        
-        return redirect('/pago')
-
-        return super(pasajero, self).form_valid(form)
-
 def pago(request):
-    return render(request, "departamento/pago.html")
+    arriendo = Arriendo.objects.last()
+    departamento = Departamento.objects.get(nombre=arriendo.departamento)
+
+    data = {
+        'arriendo': arriendo,
+        'departamento':departamento,
+        'form':PagoForm()
+
+    }
+
+    if request.method == "POST":
+        formulario = PagoForm(data=request.POST)
+
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, 'Ahora si desea puede contratar un servicio extra')
+            return redirect('/datosArriendo') 
+        else:
+            data["form"] = formulario
+
+    return render(request, "departamento/pago.html", data)
 
 def servicios(request):
 
@@ -269,6 +279,85 @@ def transporte(request):
     }
     
     return render(request, "departamento/transporte.html", data)
+
+class pasajero(FormView):
+    template_name = 'departamento/acompañantes.html'
+    arriendo = Arriendo.objects.all().last()
+    form_class = formset_factory(PasajeroForm, extra=1)
+    
+    def form_valid(self, form):
+
+        for f in form:
+            f.save()
+        
+        return redirect('/pago')
+
+        return super(pasajero, self).form_valid(form)
+
+def contratoServicio(request, pk):
+    servicios = Servicio.objects.get(id=pk)
+
+    data = {
+        'servicios': servicios,
+    }
+    return render(request, "departamento/contratoServicio.html", data)
+
+def contratoTransporte(request, pk):
+    transportes = Transporte.objects.get(id=pk)
+
+    data = {
+        'transportes': transportes,
+    }
+
+    return render(request, "departamento/contratoTransporte.html", data)
+
+def render_to_pdf(template_src, context_dict={}):
+	template = get_template(template_src)
+	html  = template.render(context_dict)
+	result = BytesIO()
+	pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+	if not pdf.err:
+		return HttpResponse(result.getvalue(), content_type='application/pdf')
+	return None
+
+
+data = {
+	"company": "Dennnis Ivanov Company",
+	"address": "123 Street name",
+	"city": "Vancouver",
+	"state": "WA",
+	"zipcode": "98663",
+
+
+	"phone": "555-555-2345",
+	"email": "youremail@dennisivy.com",
+	"website": "dennisivy.com",
+	}
+
+class ViewPDF(View):
+	def get(self, request, *args, **kwargs):
+
+		pdf = render_to_pdf('departamento/pdf_template.html', data)
+		return HttpResponse(pdf, content_type='application/pdf')
+
+class DownloadPDF(View):
+	def get(self, request, *args, **kwargs):
+		
+		pdf = render_to_pdf('departamento/pdf_template.html', data)
+
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = "Invoice_%s.pdf" %("12341231")
+		content = "attachment; filename='%s'" %(filename)
+		response['Content-Disposition'] = content
+		return response
+
+def datosArriendo(request):
+    arriendo = Arriendo.objects.last()
+    data = {
+        'arriendo': arriendo,
+    }
+
+    return render(request, "departamento/datosArriendo.html", data)
 
 class error_404(TemplateView):
     template_name = "departamento/404.html"

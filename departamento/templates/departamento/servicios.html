@@ -11,6 +11,18 @@
     <h2 class="pb-2 border-bottom">Servicios</h2>
     <p style="font-size: 30px;">Observa nuestros diferentes tipos de servicios extras que tenemos para ti.</p>
 
+<!--Mensajes-->
+  {% if messages %}
+    {% for m in messages %}
+      <script>
+        Swal.fire(
+          '!!!Pago Exitoso!!!',
+          '{{m}}',
+          'success'
+        )
+      </script>
+    {% endfor %}
+  {% endif %}
   <!-- Imagenes hover-->
   <section class="main">
     <ul class="ch-grid">
@@ -39,7 +51,7 @@
           <div class="ch-info">
             <br>
             <i class="fas fa-utensils fa-2x"></i>
-            <p>Comidas<a href="#">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
+            <p>Comidas<a href="/listadoServicios">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
           </div>
           <div class="ch-thumb ch-img-3"></div>
         </div>
@@ -49,7 +61,7 @@
           <div class="ch-info">
             <br>
             <img class="fa-2x" src="{% static '/img/iconorafting.png' %}" alt="iconorafting" width="50px">
-            <p>Diversión en rafting. <a href="#">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
+            <p>Diversión en rafting. <a href="/listadoServicios">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
           </div>
           <div class="ch-thumb ch-img-4"></div>
         </div>
@@ -59,7 +71,7 @@
           <div class="ch-info">
             <br>
             <img class="fa-2x" src="{% static '/img/canopyicono.png' %}" alt="canopyicono" width="40px">
-            <p>Actividad canopy. <a href="#">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
+            <p>Actividad canopy. <a href="/listadoServicios">Ver tema.<br><i class="fas fa-info-circle fa-2x"></i></a></p>
           </div>
           <div class="ch-thumb ch-img-5"></div>
         </div>
@@ -69,7 +81,7 @@
           <div class="ch-info">
             <br>
             <i class="fas fa-hiking fa-2x"></i>
-            <p>Excursionismos por lindos lugares. <a href="#">Ver tema. <br><i class="fas fa-info-circle fa-2x"></i></a></p>
+            <p>Excursionismos por lindos lugares. <a href="/listadoServicios">Ver tema. <br><i class="fas fa-info-circle fa-2x"></i></a></p>
           </div>
           <div class="ch-thumb ch-img-6"></div>
         </div>

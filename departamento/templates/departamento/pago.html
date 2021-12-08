@@ -8,6 +8,8 @@
 
 {% block content %}
 
+{% load humanize %}
+
 <style>
   @import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
   body,html {
@@ -159,7 +161,7 @@ ul li:hover {
   color:#fff;
   cursor:pointer;
   position:absolute;
-  bottom:25px;
+  bottom:20px;
   width:calc(100% - 50px);
   -webkit-transition:all .2s ease;
           transition:all .2s ease;
@@ -187,7 +189,7 @@ ul li:hover {
 }
 .input-field {
   background:rgba(255,255,255,0.1);
-  margin-bottom:10px;
+  margin-bottom:3px;
   margin-top:3px;
   line-height:1.5em;
   font-size:20px;
@@ -360,6 +362,7 @@ transition: all 300ms ease;
 }
 </style>
 
+
 <div class='containerPago'>
   <div class='window'>
     <div class='order-info'>
@@ -377,7 +380,7 @@ transition: all 300ms ease;
           
             <!-- This is the individual marker-->
             <div class="marker m2 timeline-icon two">
-              <a href="/acompañante" style="color: white;"><i class="fas fa-user-plus"></i></a>
+              <i class="fas fa-user-plus"></i>
             </div>
             
             <!-- This is the individual marker-->
@@ -388,22 +391,25 @@ transition: all 300ms ease;
           </div>
         
         </div>
-        <br>
+        <div class="text-center">
+          <h5>Orden Compra:</h5>
+          <h5>{{ arriendo.nombre_cliente | first}}{{ arriendo.apellido_cliente | first}}0000{{ arriendo.id}}</h5>
+        </div>
         <h2>Resumen del arriendo</h2>
                 <div class='line'></div>
         <table class='order-table'>
           <tbody>
             <tr>
-              <td><img src="{% static '/img/dptopago.jpg' %}" width="200"></img>
+              <td><img src="/media/{{departamento.imagen}}" width="200"></img>
               </td>
               <td>
                 <br> <span class='thin'>Departamento</span>
-                <br>Los Valles<br> <span class='thin small'> Zona: La Serena</span>
+                <br>{{ arriendo.departamento }}<br> <span class='thin small'> Zona: {{ arriendo.zona }} </span>
               </td>
             </tr>
             <tr>
               <td>
-                <div class='price'>$55.000 CLP</div>
+                <div class='price'>${{ arriendo.precio | intcomma }} CLP</div>
               </td>
             </tr>
           </tbody>
@@ -412,57 +418,64 @@ transition: all 300ms ease;
         <div class='line'></div>
         <div class='total'>
           <span style='float:left;'>
-            <div class='thin dense'>VAT 19%</div>
-            <div class='thin dense'>Delivery</div>
+            <div class='thin dense'>Pasajeros</div>
+            <div class='thin dense'>Descuento</div>
             TOTAL
           </span>
           <span style='float:right; text-align:right;'>
-            <div class='thin dense'>$68.75</div>
-            <div class='thin dense'>$4.95</div>
-            $435.55
+            <div class='thin dense'>{{ arriendo.cantidad_personas }} persona(s)</div>
+            <div class='thin dense'>$0</div>
+            ${{ arriendo.precio_final | intcomma }} CLP
           </span>
         </div>
 </div>
 </div>
-        <div class='credit-info'>
-          <div class='credit-info-content' >
-            <table class='half-input-table'>
-              <tr><td>Selecciona método pago: </td><td><div class='dropdown' id='card-dropdown'><div class='dropdown-btn' id='current-card'>Visa</div>
-                <div class='dropdown-select'>
-                <ul>
-                  <li>Cuenta Rut</li>
-                  <li>PayPal</li>
-                  <li>MasterCard</li>
-                  <li>RedCompra</li>
-                  </ul></div>
-                </div>
-               </td></tr>
-            </table>
-            <img src='https://dl.dropboxusercontent.com/s/ubamyu6mzov5c80/visa_logo%20%281%29.png' height='80' class='credit-card-image' id='credit-card-image'></img>
-            <form method="POST">
-              Card Number
-              <input class='input-field' required></input>
-              Card Holder
-              <input class='input-field'></input>
-              <table class='half-input-table'>
-                <tr>
-                  <td> Expires
-                    <input class='input-field'></input>
-                  </td>
-                  <td>CVC
-                    <input class='input-field'></input>
-                  </td>
-                </tr>
-              </table>
-              <button class='pay-btn'>Verificar Pago</button>
-            </form>
-            
-            
 
+<div class='credit-info'>
+  <div class='credit-info-content' >
+    <form method="POST">
+      {% csrf_token %}
+      <table class='half-input-table'>
+        <tr><td>Selecciona método pago: </td><td><div class='dropdown' id='card-dropdown'><div class='dropdown-btn' id='current-card'>Visa</div>
+          <div class='dropdown-select'>
+          <ul>
+            <li>Cuenta Rut</li>
+            <li>PayPal</li>
+            <li>MasterCard</li>
+            <li>WebPay</li>
+            </ul></div>
           </div>
-
-        </div>
-      </div>
+        </td></tr>
+      </table>
+      <img src='https://dl.dropboxusercontent.com/s/ubamyu6mzov5c80/visa_logo%20%281%29.png' height='80' class='credit-card-image' id='credit-card-image'></img>
+    
+      <table class='half-input-table'>
+        <input type="hidden" name="usuario" maxlength="20" required="" id="id_usuario" value="{{request.user.username}}">
+        <tr>
+          <td> Orden de compra
+            <input class='input-field' type="text" name="orden_compra" maxlength="20" required="" id="id_orden_compra" value="{{ arriendo.nombre_cliente | first}}{{ arriendo.apellido_cliente | first}}0000{{ arriendo.id}}" readonly>
+          </td>
+          <td>Tarjeta
+            <input class='input-field' type="text" name="tipo_tarjeta" maxlength="20" required="" id="id_tipo_tarjeta" value="Visa" readonly>
+          </td>
+        </tr>
+      </table>
+      Número Tarjeta
+      <input class='input-field' type="number" name="numero_tarjeta" required="" id="id_numero_tarjeta">
+      Titular de la tarjeta
+      <input class='input-field' type="text" name="titular_tarjeta" maxlength="100" required="" id="id_titular_tarjeta">              <table class='half-input-table'>
+        <tr>
+          <td> Expira
+            <input class='input-field' type="text" name="expira" maxlength="20" required="" id="id_expira">
+          </td>
+          <td>CVC
+            <input class='input-field' type="text" name="cvc" maxlength="8" required="" id="id_cvc">
+          </td>
+        </tr>
+      </table>
+      <button class='pay-btn' type="submit">Verificar Pago</button>
+    </form>
+  </div>
 </div>
 
 {% if messages %}
@@ -504,13 +517,15 @@ transition: all 300ms ease;
         activeDropdown = null;
         e.target.innerHTML = document.getElementById('current-card').innerHTML;
         document.getElementById('current-card').innerHTML = 'Cuenta Rut';
+        document.getElementById("id_tipo_tarjeta").value = 'Cuenta Rut';
       }
       else if (e.target.innerHTML === 'PayPal') {
           document.getElementById('credit-card-image').src = 'https://www.freeiconspng.com/uploads/paypal-icon-8.png';
             activeDropdown.classList.remove('visible');
         activeDropdown = null;
         e.target.innerHTML = document.getElementById('current-card').innerHTML;
-        document.getElementById('current-card').innerHTML = 'PayPal';      
+        document.getElementById('current-card').innerHTML = 'PayPal'; 
+        document.getElementById("id_tipo_tarjeta").value = 'PayPal';     
       }
       else if (e.target.innerHTML === 'Visa') {
           document.getElementById('credit-card-image').src = 'https://dl.dropboxusercontent.com/s/ubamyu6mzov5c80/visa_logo%20%281%29.png';
@@ -518,6 +533,7 @@ transition: all 300ms ease;
         activeDropdown = null;
         e.target.innerHTML = document.getElementById('current-card').innerHTML;
         document.getElementById('current-card').innerHTML = 'Visa';
+        document.getElementById("id_tipo_tarjeta").value = 'Visa';  
       }
       else if (e.target.innerHTML === 'MasterCard') {
           document.getElementById('credit-card-image').src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/MasterCard_early_1990s_logo.png/1200px-MasterCard_early_1990s_logo.png';
@@ -525,13 +541,15 @@ transition: all 300ms ease;
         activeDropdown = null;
         e.target.innerHTML = document.getElementById('current-card').innerHTML;
         document.getElementById('current-card').innerHTML = 'MasterCard';
+        document.getElementById("id_tipo_tarjeta").value = 'MasterCard';  
       }
       else if (e.target.innerHTML === 'WebPay') {
           document.getElementById('credit-card-image').src = 'https://iconape.com/wp-content/png_logo_vector/webpay-logo.png';
             activeDropdown.classList.remove('visible');
         activeDropdown = null;
         e.target.innerHTML = document.getElementById('current-card').innerHTML;
-        document.getElementById('current-card').innerHTML = 'RedCompra';
+        document.getElementById('current-card').innerHTML = 'WebPay';
+        document.getElementById("id_tipo_tarjeta").value = 'WebPay'; 
       }
     }
     else if (e.target.className !== 'dropdown-btn' && activeDropdown) {

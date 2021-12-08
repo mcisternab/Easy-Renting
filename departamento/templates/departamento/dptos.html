@@ -59,8 +59,12 @@
               <div class="card mb-4 shadow-sm ">
                   <img class="bd-placeholder-img card-img-top" src="{{ d.imagen.url }}" alt="" width="100%" height="225">
                   <div class="card-body">
-                    <h3>{{ d.nombre | title }}</h3>
+                    <h3>{{ d.nombre | title }}</h3> 
                     <p class="card-text">{{ d.descripcion }}</p>
+                    <div class="text-center">
+                      <small><i class="fas fa-map-marker-alt"></i> {{ d.direccion }}</small><br>
+                      <small><i class="fas fa-user-friends"></i> Capacidad máxima {{ d.capacidad }} personas</small><br><br>  
+                    </div>
                     <strong style="font-size: 15px;">Servicios extras:</strong>
                     <div class="row">
                       <div class="col-lg-6">

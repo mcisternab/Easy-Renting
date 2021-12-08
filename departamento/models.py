@@ -15,6 +15,7 @@ class Departamento(models.Model):
     zona = models.ForeignKey(Zona, on_delete=models.PROTECT)
     direccion = models.TextField()
     precio = models.IntegerField()
+    capacidad = models.IntegerField()
     imagen = models.ImageField()
     arrendado = models.BooleanField()
     wifi = models.BooleanField()
@@ -90,19 +91,10 @@ class Arriendo(models.Model):
     fecha_entrada = models.DateTimeField()
     fecha_salida = models.DateTimeField()
     precio = models.IntegerField()
+    precio_final = models.IntegerField()
 
     def __str__(self):
         return str(self.nombre_cliente)
-
-class Pasajero(models.Model):
-    nombre_cliente = models.ForeignKey(Arriendo, on_delete=models.PROTECT)
-    rut_pasajero = models.CharField(max_length=20)
-    nombre_pasajero = models.CharField(max_length=20)
-    apellido_paterno = models.CharField(max_length=20)
-    apellido_materno = models.CharField(max_length=20)
-
-    def __str__(self):
-        return str(self.rut_pasajero)
 
 class ActaIn(models.Model):
     first_name = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -123,5 +115,26 @@ class ActaOut(models.Model):
     departamento = models.ForeignKey(Departamento, on_delete=models.PROTECT)
     tipo =  models.ForeignKey(Tiposervicio, on_delete=models.PROTECT)
 
+class Pasajero(models.Model):
+    nombre_cliente = models.CharField(max_length=20)
+    rut_pasajero = models.CharField(max_length=20)
+    nombre_completo = models.CharField(max_length=100)
 
+    def __str__(self):
+        return str(self.nombre_cliente)
 
+class Pago(models.Model):
+    orden_compra = models.CharField(max_length=20)
+    tipo_tarjeta = models.CharField(max_length=20)
+    numero_tarjeta = models.IntegerField()
+    titular_tarjeta = models.CharField(max_length=100)
+    expira = models.CharField(max_length=20)
+    cvc = models.CharField(max_length=8)
+    usuario = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.orden_compra)
+
+class Transportes_contrato(models.Model):
+    orden_compra = models.CharField(max_length=20)
+    usuario = models.CharField(max_length=20)

@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'EasyRenting.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'Easy_Renting_DW',
+        'NAME': 'Easy_Renting',
         'USER': 'sa',
         'PASSWORD': 'marxis1991',
         'HOST': 'LAPTOP-5DT9KVEI',

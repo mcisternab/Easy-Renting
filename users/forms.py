@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from departamento.models import Contacto, Arriendo, Pasajero
+from departamento.models import Contacto, Arriendo, Pasajero, Pago
 
 # Extendemos del original
 
@@ -35,10 +35,16 @@ class ArriendoForm(forms.ModelForm):
 
     class Meta:
         model = Arriendo
-        fields = ["nombre_cliente","apellido_cliente","email_cliente","usuario_cliente","departamento","zona","cantidad_personas","fecha_entrada","fecha_salida","precio"]
+        fields = ["nombre_cliente","apellido_cliente","email_cliente","usuario_cliente","departamento","zona","cantidad_personas","fecha_entrada","fecha_salida","precio","precio_final"]
 
 class PasajeroForm(forms.ModelForm):
 
     class Meta:
         model = Pasajero
-        fields = ["nombre_cliente","rut_pasajero","nombre_pasajero","apellido_paterno","apellido_materno"]
+        fields = ["nombre_cliente","rut_pasajero","nombre_completo"]
+
+class PagoForm(forms.ModelForm):
+
+    class Meta:
+        model = Pago
+        fields = ["orden_compra","tipo_tarjeta","numero_tarjeta","titular_tarjeta","expira","cvc","usuario"]

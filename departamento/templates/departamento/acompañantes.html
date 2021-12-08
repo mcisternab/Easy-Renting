@@ -4,7 +4,6 @@
 
 {% block content %}
 
-{% load crispy_forms_tags %}
 <style>
 
     #timeline-wrap{
@@ -108,20 +107,20 @@
        
     </div>
 <form method="POST">
-  {% csrf_token %}                    
-  {{ form.management_form }}
-  {% for f in form %}     
-  
+  {% csrf_token %}     
+  {{ form.management_form }}  
+  <h5>Datos Acompañantes:</h5>  
+  {% for f in form %}
   <div class="row">
-    <div class="col-lg-12">
-      <h5>Datos Acompañantes:</h5>        
-      {{ f | crispy }}
+    <div class="col-lg-12"><div>
+      {{ f }}
       <br>
     </div>
   </div>
   {% endfor %}
-  <button class="btn btn-primary" type="submit">siguiente</button>
+  <button class="btn btn-primary" type="submit">Continuar con el pago</button>
 </form>
+
 
 {% if messages %}
   {% for m in messages %}

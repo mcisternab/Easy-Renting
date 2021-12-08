@@ -1,0 +1,219 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% load humanize %}
+        
+<div class="container">
+    <main>
+
+      <div class="py-5 text-center">
+        <img src="https://st3.depositphotos.com/4060975/17876/v/450/depositphotos_178762002-stock-illustration-payment-flat-vector-icon.jpg" alt="pago" width="150">
+        <h2>Pago Easy Renting</h2>
+        <p class="lead">Realise el pago del transporte que contrató. 
+          Recuerde que una vez pagado el servicio, contará con la boleta que posee el detalle del 
+          contrato correspondiente al servicio de transporte.</p>
+      </div>
+
+      <div class="row g-5">
+        <div class="col-md-6 col-lg-5 order-md-last">
+          <h3 class="mb-3">Detalles vehículo <i class="fas fa-car"></i></h3>
+          <br><br>
+          <div class="card">
+            <div class="card-header row text-center">
+              <div class="col-lg-12">
+                <h5>{{transportes.tipoVehiculo}}</h5>
+              </div>
+            </div>
+            <img class="px-4" src="/media/{{transportes.imagen}}" alt="{{transportes.tipoVehiculo}}" width="400">
+            <div class="card-body">
+              <h5 class="card-title">Detalles</h5>
+              <p class="card-text">{{transportes.descripcion}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-7">
+          <!--FORMULARIO ARRIENDO-->
+          <form class="needs-validation" novalidate method="POST" name="f">
+            {% csrf_token %}
+            <div class="row g-3">
+              <h3 class="mb-3">Datos Cliente <i class="far fa-address-card"></i></h3>
+              <div class="col-sm-6">
+                <label for="id_nombre_cliente" class="form-label">Nombre cliente:</label>
+                <input type="text" class="form-control" placeholder="" name="nombre_cliente" maxlength="20" id="id_nombre_cliente" value="{{request.user.first_name}}" required>
+                <div class="invalid-feedback">
+                  Nombre es requerido.
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="id_apellido_cliente" class="form-label">Apellido cliente:</label>
+                <input id="id_apellido_cliente" type="text" class="form-control" required="" name="apellido_cliente" maxlength="20" placeholder="" value="{{request.user.last_name}}">
+                <div class="invalid-feedback">
+                  Por favor, ingresa cantidad de acompañantes.
+                </div>
+              </div>
+              
+              <div class="col-12">
+                <div class="input-group has-validation">
+                  <input type="hidden" class="form-control" name="usuario_cliente" maxlength="20" required="" id="id_usuario_cliente" placeholder="Username" value="{{request.user.username}}" readonly>
+                  <div class="invalid-feedback">
+                    Nombre Usuario Requerido.
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-12">
+                <label for="id_email_cliente" class="form-label">Email cliente:</label>
+                <input type="email" class="form-control" name="email_cliente" maxlength="254" required="" id="id_email_cliente" placeholder="usuario@gmail.com" value="{{request.user.email}}">
+                <div class="invalid-feedback">
+                  Por favor, ingresa un email válido.
+                </div>
+              </div>
+
+              <h3 class="mb-3">Datos transporte <i class="fas fa-shuttle-van"></i></h3>
+
+              <div class="col-md-9">
+                <label for="id_cantidad_personas" class="form-label">Dirección (donde desea abordar el transporte):</label>
+                <input type="number" class="form-control" name="cantidad_personas" placeholder="" min="1" max="{{ transportes.capacidad }}" required="" onchange="cal()" onkeyup="cal()" oninput="myFunction()" id="id_cantidad_personas">
+                <div class="invalid-feedback">
+                  Por favor, ingresa cantidad de acompañantes.
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="id_cantidad_personas" class="form-label">Cantidad personas:</label>
+                <input type="number" class="form-control" name="cantidad_personas" placeholder="" min="1" max="{{ transportes.capacidad }}" required="" onchange="cal()" onkeyup="cal()" oninput="myFunction()" id="id_cantidad_personas">
+                <div class="invalid-feedback">
+                  Por favor, ingresa cantidad de acompañantes.
+                </div>
+              </div>
+
+              <!-- Datepicker -->
+              <div class="col-md-6">
+                <div class="form-control-wrapper">
+                  <label  class="form-label">Fecha y hora llegada:</label>
+                  <input type="text" id="date-start" class="form-control floating-label" name="fecha_entrada" required="" id="id_fecha_entrada" placeholder="" onchange="cal()" onkeyup="cal()">
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-control-wrapper">
+                  <label  class="form-label">Fecha y hora llegada:</label>
+                  <input type="text" class="form-control floating-label" placeholder="" id="date-end" name="fecha_salida" required="" onchange="cal()" onkeyup="cal()">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_zona" class="form-label">Zona:</label>
+                <input type="text" class="form-control" value="{{ transportes.zona }}" name="zona" maxlength="20" required="" id="id_zona" readonly>
+              </div>
+
+              <div class="col-md-6">
+                <label for="id_departamento" class="form-label">Departamento:</label>
+                <input class="form-control" value="{{ transportes.departamento }}" type="text" name="departamento" maxlength="20" required="" id="id_departamento" onchange="cal()" onkeyup="cal()" readonly>
+                <div class="invalid-feedback">
+                  Por favor, ingresa un departamento.
+                </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-md-6 ">
+                  <label for="id_precio" class="form-label">Precio ida-vuelta:</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" id="precio" name="precio" placeholder="" value="{{ transportes.precio }}" readonly>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="my-4">
+
+              <button class="w-100 btn btn-primary btn-lg" type="reset">Limpiar</button>          
+              <button class="w-100 btn btn-primary btn-lg" type="submit">Continuar con el pago <i class="fas fa-money-check-alt"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <br><br>
+
+    <!-- Script Datepicker -->
+    
+<script type="text/javascript">
+    function cal() {
+      try {
+        var a = parseInt(document.f.cantidad_personas.value),
+            b = parseInt(document.f.precio.value);
+            c = parseInt(document.f.fecha_entrada.value);
+            d = parseInt(document.f.fecha_salida.value);
+            f = d - c;
+            if(isNaN(f)){
+                    return 0;
+                }
+        document.getElementById("dias").innerHTML = f;
+        document.getElementById("total").innerHTML = "$" + (a * b * f)/2;
+        document.getElementById("id_precio_final").value = (a * b * f)/2;
+
+      } catch (e) {
+      }
+      
+    }
+
+    function myFunction() {
+      var x = document.getElementById("id_cantidad_personas").value;
+      document.getElementById("demo").innerHTML = x;
+    }
+
+		$(document).ready(function()
+		{
+			$('#date').bootstrapMaterialDatePicker
+			({
+				time: false,
+				clearButton: true
+			});
+
+			$('#time').bootstrapMaterialDatePicker
+			({
+				date: false,
+				shortTime: false,
+				format: 'HH:mm'
+			});
+
+			$('#date-format').bootstrapMaterialDatePicker
+			({
+				format: 'dddd DD MMMM YYYY - HH:mm'
+			});
+			$('#date-fr').bootstrapMaterialDatePicker
+			({
+				format: 'DD/MM/YYYY HH:mm',
+				language: 'es',
+				weekStart: 1, 
+				cancelText : 'ANNULER',
+				nowButton : true,
+				switchOnClick : true
+			});
+
+			$('#date-end').bootstrapMaterialDatePicker
+			({
+				weekStart: 0, format: 'DD/MM/YYYY HH:mm', lang: 'es',
+			});
+			$('#date-start').bootstrapMaterialDatePicker
+			({
+				weekStart: 0, format: 'DD/MM/YYYY HH:mm', shortTime : true, lang: 'es',
+			}).on('change', function(e, date)
+			{
+				$('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
+			});
+
+			$('#min-date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY HH:mm', minDate : new Date() });
+
+			$.material.init()
+		});
+
+</script>
+    
+    <script src="{% static '/js/form-validation.js' %}"></script>
+{% endblock %}
